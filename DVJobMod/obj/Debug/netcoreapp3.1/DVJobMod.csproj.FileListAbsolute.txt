@@ -1,5 +1,0 @@
-D:\Programming\GitHub Repos\DVJobMod\DVJobMod\DVJobMod\bin\Debug\netcoreapp3.1\DVJobMod.exe
-D:\Programming\GitHub Repos\DVJobMod\DVJobMod\DVJobMod\obj\Debug\netcoreapp3.1\DVJobMod.csprojAssemblyReference.cache
-D:\Programming\GitHub Repos\DVJobMod\DVJobMod\DVJobMod\obj\Debug\netcoreapp3.1\DVJobMod.AssemblyInfoInputs.cache
-D:\Programming\GitHub Repos\DVJobMod\DVJobMod\DVJobMod\obj\Debug\netcoreapp3.1\DVJobMod.AssemblyInfo.cs
-D:\Programming\GitHub Repos\DVJobMod\DVJobMod\DVJobMod\obj\Debug\netcoreapp3.1\DVJobMod.csproj.CoreCompileInputs.cache

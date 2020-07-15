@@ -1,0 +1,5 @@
+{
+	"Id": "DVJobMod",
+	"Version": "0.0.0",
+	"EntryMethod": "DVJobMod.Main.Load"
+}
