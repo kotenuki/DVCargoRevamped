@@ -1,5 +1,8 @@
 {
-	"Id":"DVCargoMod",
-	"Version":"0.0.0",
-	"EntryMethod":"DVCargoMod.Main.Load"
+	"Id": "DVCargoMod",
+	"DisplayName": "DV Cargo Mod",
+	"Author": "bigtihsuan",
+	"Version": "0.0.0",
+	"AssemblyName": "DVCargoMod.dll",
+	"EntryMethod": "DVCargoMod.Main.Load"
 }

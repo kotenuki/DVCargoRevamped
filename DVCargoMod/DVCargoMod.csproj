@@ -2,14 +2,17 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net47</TargetFramework>
     <StartupObject></StartupObject>
     <Version>0.0.0</Version>
     <Authors>bigyihsuan</Authors>
+    <FrameworkPathOverride>D:\SteamLibrary\steamapps\common\Derail Valley\DerailValley_Data\Managed\</FrameworkPathOverride>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Lib.Harmony" Version="2.0.1" />
+    <PackageReference Include="RedworkDE.Publicizer" Version="0.1.0" />
+    <PublicizeAssembly Include="Assembly-CSharp" Private="True" Readonly="False" />
   </ItemGroup>
 
   <ItemGroup>

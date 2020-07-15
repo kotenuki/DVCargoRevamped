@@ -12,4 +12,7 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgRedworkDE_Publicizer Condition=" '$(PkgRedworkDE_Publicizer)' == '' ">C:\Users\bigyi\.nuget\packages\redworkde.publicizer\0.1.0</PkgRedworkDE_Publicizer>
+  </PropertyGroup>
 </Project>

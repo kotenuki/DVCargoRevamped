@@ -1,0 +1,10 @@
+D:\Programming\GitHub Repos\DVCargoMod\DVCargoMod\bin\Release\net47\DVCargoMod.dll
+D:\Programming\GitHub Repos\DVCargoMod\DVCargoMod\bin\Release\net47\DVCargoMod.pdb
+D:\Programming\GitHub Repos\DVCargoMod\DVCargoMod\bin\Release\net47\0Harmony.dll
+D:\Programming\GitHub Repos\DVCargoMod\DVCargoMod\obj\Release\net47\DVCargoMod.csprojAssemblyReference.cache
+D:\Programming\GitHub Repos\DVCargoMod\DVCargoMod\obj\Release\net47\DVCargoMod.AssemblyInfoInputs.cache
+D:\Programming\GitHub Repos\DVCargoMod\DVCargoMod\obj\Release\net47\DVCargoMod.AssemblyInfo.cs
+D:\Programming\GitHub Repos\DVCargoMod\DVCargoMod\obj\Release\net47\DVCargoMod.csproj.CopyComplete
+D:\Programming\GitHub Repos\DVCargoMod\DVCargoMod\obj\Release\net47\DVCargoMod.dll
+D:\Programming\GitHub Repos\DVCargoMod\DVCargoMod\obj\Release\net47\DVCargoMod.pdb
+D:\Programming\GitHub Repos\DVCargoMod\DVCargoMod\obj\Release\net47\DVCargoMod.csproj.CoreCompileInputs.cache
