@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVJobMod\\DVCargoMod.csproj": {}
+    "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVCargoMod\\DVCargoMod.csproj": {}
   },
   "projects": {
-    "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVJobMod\\DVCargoMod.csproj": {
+    "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVCargoMod\\DVCargoMod.csproj": {
       "version": "0.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVJobMod\\DVCargoMod.csproj",
+        "projectUniqueName": "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVCargoMod\\DVCargoMod.csproj",
         "projectName": "DVCargoMod",
-        "projectPath": "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVJobMod\\DVCargoMod.csproj",
+        "projectPath": "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVCargoMod\\DVCargoMod.csproj",
         "packagesPath": "C:\\Users\\bigyi\\.nuget\\packages\\",
-        "outputPath": "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVJobMod\\obj\\",
+        "outputPath": "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVCargoMod\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\bigyi\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -37,6 +37,12 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Lib.Harmony": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
