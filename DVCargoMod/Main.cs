@@ -8,7 +8,8 @@ using DV.Logic.Job;
 
 namespace DVCargoMod
 {
-	class Main
+	[EnableReloading]
+	static class Main
 	{
 		static void Load(UnityModManager.ModEntry modEntry)
 		{
@@ -20,10 +21,11 @@ namespace DVCargoMod
 	[HarmonyPatch(typeof(CargoTypes), "ContainerTypeToCarTypes")]
 	class CargoTypes_Patch
 	{
-		static bool Prefix(ref Dictionary<CargoContainerType, List<TrainCarType>> __result)
+		static bool Postfix(ref Dictionary<CargoContainerType, List<TrainCarType>> __result)
 		{
-			var oilCars  = new List<TrainCarType>() { TrainCarType.TankChrome, TrainCarType.TankWhite, TrainCarType.TankYellow };
-			var gasCars  = new List<TrainCarType>() { TrainCarType.TankBlue, TrainCarType.TankOrange };
+			
+			var oilCars = new List<TrainCarType>() { TrainCarType.TankChrome, TrainCarType.TankWhite, TrainCarType.TankYellow };
+			var gasCars = new List<TrainCarType>() { TrainCarType.TankBlue, TrainCarType.TankOrange };
 			var chemCars = new List<TrainCarType>() { TrainCarType.TankBlack };
 
 			foreach (KeyValuePair<CargoContainerType, List<TrainCarType>> kvpair in __result)
@@ -45,20 +47,20 @@ namespace DVCargoMod
 				{
 					case CargoContainerType.TankerOil:
 					{
-						__result[cargoContainerType].AddRange(gasCars);
-						__result[cargoContainerType].AddRange(chemCars);
+						listOfTrainCarTypes.AddRange(gasCars);
+						listOfTrainCarTypes.AddRange(chemCars);
 						break;
 					}
 					case CargoContainerType.TankerGas:
 					{
-						__result[cargoContainerType].AddRange(oilCars);
-						__result[cargoContainerType].AddRange(chemCars);
+						listOfTrainCarTypes.AddRange(oilCars);
+						listOfTrainCarTypes.AddRange(chemCars);
 						break;
 					}
 					case CargoContainerType.TankerChem:
 					{
-						__result[cargoContainerType].AddRange(oilCars);
-						__result[cargoContainerType].AddRange(gasCars);
+						listOfTrainCarTypes.AddRange(oilCars);
+						listOfTrainCarTypes.AddRange(gasCars);
 						break;
 					}
 				}
