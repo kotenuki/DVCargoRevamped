@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
+
 using UnityEngine;
 using UnityModManagerNet;
+
 using HarmonyLib;
-using System.Reflection;
 using DV.Logic.Job;
 
 namespace DVCargoMod
 {
+	[EnableReloading]
 	static class Main
 	{
 		static void Load(UnityModManager.ModEntry modEntry) {
@@ -48,6 +51,7 @@ namespace DVCargoMod
 			{
 				//var dic = (Dictionary<CargoContainerType, List<TrainCarType>>)memberInfo.GetValue(null);
 				Debug.Log("Dictionary loaded");
+				Debug.Log("Modifying _containerTypeToCarTypes...");
 				foreach (var key in __result.Keys)
 				{
 					var cargoContainerType = key;
@@ -82,8 +86,102 @@ namespace DVCargoMod
 						}
 					}
 				}
+
+				Debug.Log("Contents of _containerTypeToCarTypes:");
+				foreach (var key in __result.Keys)
+				{
+					string o = "{";
+					foreach (var ele in __result[key])
+					{
+						o += ele + ", ";
+					}
+
+					o += "}";
+					Debug.Log(key + " --> " + o);
+				}
+
 				Debug.Log("Dictionary modified");
+
+				var prop = typeof(CargoTypes).GetProperty("cargoTypeToSupportedCarContainer",
+					BindingFlags.Static);
+				if (prop != null)
+				{
+					Debug.Log("Modifying cargoTypeToSupportedCarContainer...");
+					var dict = (Dictionary<CargoType, List<CargoContainerType>>) prop.GetValue(typeof(CargoTypes));
+
+					var keys = dict.Keys;
+					foreach (var key in keys)
+					{
+						Debug.Log("Found key " + key);
+						var cargoType = key;
+						var listOfCargoContainerTypes = dict[key];
+						// cargoTypes to add:
+						/* CargoType.CrudeOil, Diesel, Gasoline	--> CargoContainerType.TankerGas, CargoContainerType.TankerChem
+						 * CargoType.Methane, Alcohol			--> CargoContainerType.TankerOil, CargoContainerType.TankerChem
+						 * CargoType.Ammonia, SodiumHydroxide	--> CargoContainerType.TankerOil, CargoContainerType.TankerGas
+						 */
+						switch (cargoType)
+						{
+							case CargoType.CrudeOil:
+							case CargoType.Diesel:
+							case CargoType.Gasoline:
+							{
+								Debug.Log("Adding to " + key + "...");
+								listOfCargoContainerTypes.Add(CargoContainerType.TankerGas);
+								listOfCargoContainerTypes.Add(CargoContainerType.TankerChem);
+								Debug.Log("Added!");
+								break;
+							}
+							case CargoType.Methane:
+							case CargoType.Alcohol:
+							{
+								Debug.Log("Adding to " + key + "...");
+								listOfCargoContainerTypes.Add(CargoContainerType.TankerOil);
+								listOfCargoContainerTypes.Add(CargoContainerType.TankerChem);
+								Debug.Log("Added!");
+								break;
+							}
+							case CargoType.Ammonia:
+							case CargoType.SodiumHydroxide:
+							{
+								Debug.Log("Adding to " + key + "...");
+								listOfCargoContainerTypes.Add(CargoContainerType.TankerOil);
+								listOfCargoContainerTypes.Add(CargoContainerType.TankerGas);
+								Debug.Log("Added!");
+								break;
+							}
+						}
+
+					}
+
+					Debug.Log("cargoTypeToSupportedCarContainer modified!");
+
+					Debug.Log("Contents of cargoTypeToSupportedCarContainer:");
+					foreach (var key in dict.Keys)
+					{
+						string o = "{";
+						foreach (var ele in dict[key])
+						{
+							o += ele + ", ";
+						}
+
+						o += "}";
+						Debug.Log(key + " --> " + o);
+					}
+				}
+				else
+				{
+					Debug.Log("cargoTypeToSupportedCarContainer was null");
+				}
 			}
 		}
 	}
+	// "Error while creating transport account" --> DV.Logic.Jobs.JobGenerator.CreateTransportJob()
+	//class CanCarContainCargoType_Patch
+	//{
+	//	static void Prefix(ref bool __result)
+	//	{
+
+	//	}
+	//}
 }
