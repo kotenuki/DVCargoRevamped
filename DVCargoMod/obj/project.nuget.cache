@@ -1,11 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "HHoh8bYRzGKLZ7x6/RO/mkEXMgcBd3haDSCBpiX2uwoFEd5kqy1JI1Ixd0hfWODC41h+Pv0waPlX+AfCt1aRmw==",
+  "dgSpecHash": "6yoigt8nHHPP4KLN6+u2SZ0pLWhOKZbje6j2D/f1lWbl8kyRZ4wCOpqqQBLdr8GGQaqzsZiKrqh2o64FDpnQlw==",
   "success": true,
   "projectFilePath": "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVCargoMod\\DVCargoMod.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\bigyi\\.nuget\\packages\\lib.harmony\\2.0.1\\lib.harmony.2.0.1.nupkg.sha512",
-    "C:\\Users\\bigyi\\.nuget\\packages\\redworkde.publicizer\\0.1.0\\redworkde.publicizer.0.1.0.nupkg.sha512"
+    "C:\\Users\\bigyi\\.nuget\\packages\\lib.harmony\\2.0.1\\lib.harmony.2.0.1.nupkg.sha512"
   ],
   "logs": []
 }

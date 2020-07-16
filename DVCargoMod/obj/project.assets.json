@@ -10,12 +10,6 @@
         "runtime": {
           "lib/net45/0Harmony.dll": {}
         }
-      },
-      "RedworkDE.Publicizer/0.1.0": {
-        "type": "package",
-        "build": {
-          "build/RedworkDE.Publicizer.targets": {}
-        }
       }
     }
   },
@@ -44,37 +38,11 @@
         "lib/netcoreapp3.1/0Harmony.dll",
         "lib/netcoreapp3.1/0Harmony.xml"
       ]
-    },
-    "RedworkDE.Publicizer/0.1.0": {
-      "sha512": "uKJTRYG004qKmJvz61upwE/sqwPMwCUvGVvs6AFRANRlzsp5KNSIQjTDHKI9xWBfepzh5C70DwW7jlDxoqszlQ==",
-      "type": "package",
-      "path": "redworkde.publicizer/0.1.0",
-      "hasTools": true,
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "build/RedworkDE.Publicizer.targets",
-        "redworkde.publicizer.0.1.0.nupkg.sha512",
-        "redworkde.publicizer.nuspec",
-        "tools/net46/Microsoft.Build.Framework.dll",
-        "tools/net46/Microsoft.Build.Tasks.Core.dll",
-        "tools/net46/Microsoft.Build.Utilities.Core.dll",
-        "tools/net46/Microsoft.VisualStudio.Setup.Configuration.Interop.dll",
-        "tools/net46/RedworkDE.Publicizer.Tasks.dll",
-        "tools/net46/System.Collections.Immutable.dll",
-        "tools/net46/System.Runtime.InteropServices.RuntimeInformation.dll",
-        "tools/net46/System.Threading.Tasks.Dataflow.dll",
-        "tools/net46/dnlib.dll",
-        "tools/netstandard2.0/RedworkDE.Publicizer.Tasks.deps.json",
-        "tools/netstandard2.0/RedworkDE.Publicizer.Tasks.dll",
-        "tools/netstandard2.0/dnlib.dll"
-      ]
     }
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.7": [
-      "Lib.Harmony >= 2.0.1",
-      "RedworkDE.Publicizer >= 0.1.0"
+      "Lib.Harmony >= 2.0.1"
     ]
   },
   "packageFolders": {
@@ -117,10 +85,6 @@
           "Lib.Harmony": {
             "target": "Package",
             "version": "[2.0.1, )"
-          },
-          "RedworkDE.Publicizer": {
-            "target": "Package",
-            "version": "[0.1.0, )"
           }
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"

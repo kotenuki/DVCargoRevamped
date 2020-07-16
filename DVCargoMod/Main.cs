@@ -10,16 +10,18 @@ namespace DVCargoMod
 {
 	static class Main
 	{
-		private static bool GameReady = false;
-		static void Load(UnityModManager.ModEntry modEntry)
-		{
-			modEntry.Logger.Log("DVCargoMod is loaded");
-			//var harmony = new Harmony(modEntry.Info.Id);
-			//harmony.PatchAll(Assembly.GetExecutingAssembly());
-			modifyCars(modEntry);
+		static void Load(UnityModManager.ModEntry modEntry) {
+			Debug.Log("DVCargoMod is loaded");
+			var harmony = new Harmony(modEntry.Info.Id);
+			harmony.PatchAll(Assembly.GetExecutingAssembly());
 		}
+	}
 
-		private static void modifyCars(UnityModManager.ModEntry modEntry)
+	[HarmonyPatch(typeof(CargoTypes))]
+	[HarmonyPatch("ContainerTypeToCarTypes", MethodType.Getter)]
+	class ContainerTypeToCarTypes_Getter_Patch
+	{
+		static void Postfix(ref Dictionary<CargoContainerType, List<TrainCarType>> __result)
 		{
 			var oilCars = new List<TrainCarType>()
 				{TrainCarType.TankChrome, TrainCarType.TankWhite, TrainCarType.TankYellow};
@@ -38,57 +40,49 @@ namespace DVCargoMod
 			 * TankerChem	--> TankORange, TankBlue, TankYellow, TankWhite, TankChrome
 			 */
 
-			modEntry.Logger.Log("Getting dictionary...");
-			// Thank you to Cadde in the DV Discord
-			var memberInfo = typeof(CargoTypes)
-				.GetField("_containerTypeToCarTypes", BindingFlags.NonPublic | BindingFlags.Static);
-			if (memberInfo != null)
+			//Debug.Log("Getting dictionary...");
+			//// Thank you to Cadde in the DV Discord
+			//var memberInfo = typeof(CargoTypes)
+			//	.GetField("_containerTypeToCarTypes", BindingFlags.NonPublic | BindingFlags.Static);
+			if (__result != null)
 			{
-				var dic = (Dictionary<CargoContainerType, List<TrainCarType>>)memberInfo.GetValue(null);
-				modEntry.Logger.Log("Dictionary loaded");
-				foreach (var key in dic.Keys)
+				//var dic = (Dictionary<CargoContainerType, List<TrainCarType>>)memberInfo.GetValue(null);
+				Debug.Log("Dictionary loaded");
+				foreach (var key in __result.Keys)
 				{
 					var cargoContainerType = key;
-					var listOfTrainCarTypes = dic[key];
-					modEntry.Logger.Log(String.Format("Found key {0}", key));
-					// Add cargo to cars:
-					/* TankerOil	--> Ammonia, SodiumHydroxide, Alcohol, Methane
-					 * TankerGas	--> Ammonia, SodiumHydroxide, CrudeOil, Diesel, Gasoline
-					 * TankerChem	--> Alcohol, Methane, CrudeOil, Diesel, Gasoline
-					 */
-					// So, need to access the train car list to add the car type
-					// Add the TrainCarTypes to the CargoContainerType's List:
-					/* TankerOil	--> TankOrange, TankBlue, TankBlack
-					 * TankerGas	--> TankYellow, TankWhite, TankChrome, TankBlack
-					 * TankerChem	--> TankORange, TankBlue, TankYellow, TankWhite, TankChrome
-					 */
+					var listOfTrainCarTypes = __result[key];
+					Debug.Log("Found key " + key);
+
 					switch (cargoContainerType)
 					{
 						case CargoContainerType.TankerOil:
 						{
+							Debug.Log("Adding to " + key + "...");
 							listOfTrainCarTypes.AddRange(gasCars);
 							listOfTrainCarTypes.AddRange(chemCars);
+							Debug.Log("Added!");
 							break;
 						}
 						case CargoContainerType.TankerGas:
 						{
+							Debug.Log("Adding to " + key + "...");
 							listOfTrainCarTypes.AddRange(oilCars);
 							listOfTrainCarTypes.AddRange(chemCars);
+							Debug.Log("Added!");
 							break;
 						}
 						case CargoContainerType.TankerChem:
 						{
+							Debug.Log("Adding to " + key + "...");
 							listOfTrainCarTypes.AddRange(oilCars);
 							listOfTrainCarTypes.AddRange(gasCars);
-							break;
-						}
-						default:
-						{
+							Debug.Log("Added!");
 							break;
 						}
 					}
 				}
-				modEntry.Logger.Log("Dictionary modified");
+				Debug.Log("Dictionary modified");
 			}
 		}
 	}
