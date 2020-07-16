@@ -102,8 +102,8 @@ namespace DVCargoMod
 
 				Debug.Log("Dictionary modified");
 
-				var prop = typeof(CargoTypes).GetProperty("cargoTypeToSupportedCarContainer",
-					BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance);
+				var prop = typeof(CargoTypes).GetField("cargoTypeToSupportedCarContainer",
+					BindingFlags.NonPublic | BindingFlags.Static);
 				if (prop != null)
 				{
 					Debug.Log("Modifying cargoTypeToSupportedCarContainer...");
