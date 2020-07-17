@@ -20,20 +20,6 @@ namespace DVCargoMod
 			var harmony = new Harmony(modEntry.Info.Id);
 			harmony.PatchAll(Assembly.GetExecutingAssembly());
 		}
-
-		public static List<CargoType> GetCargoTypePerCar(
-			List<CarsPerCargoType> carsPerCargoTypeData)
-		{
-			List<CargoType> cargoTypeList = new List<CargoType>();
-			for (int index1 = 0; index1 < carsPerCargoTypeData.Count; ++index1)
-			{
-				List<Car> cars = carsPerCargoTypeData[index1].cars;
-				CargoType cargoType = carsPerCargoTypeData[index1].cargoType;
-				for (int index2 = 0; index2 < cars.Count; ++index2)
-					cargoTypeList.Add(cargoType);
-			}
-			return cargoTypeList;
-		}
 	}
 
 	[HarmonyPatch(typeof(CargoTypes))]
@@ -158,6 +144,9 @@ namespace DVCargoMod
 
 			Debug.Log("cargoTypeToSupportedCarContainer modified!");
 
+			//TODO: cleanup dupe entries in lists
+			//HashSets?
+
 			Debug.Log("Contents of _containerTypeToCarTypes:");
 			foreach (var key in __result.Keys)
 			{
@@ -205,192 +194,134 @@ namespace DVCargoMod
 		}
 	}
 
-	[HarmonyPatch(typeof(JobsGenerator), "CreateShuntingLoadJob")]
-	class CreateShuntingLoadJob_Patch
-	{
-		static bool Prefix (
-			Station jobOriginStation,
-			StationsChainData chainData,
-			Track startingTrack,
-			List<CarsPerTrack> destinationTracksData,
-			WarehouseMachine unloadMachine,
-			List<CarsPerCargoType> carsUnloadData,
-			bool forceFillCargoIfMissing = false,
-			float timeLimit = 0.0f,
-			float initialWage = 0.0f,
-			string forcedJobId = null,
-			JobLicenses requiredLicenses = JobLicenses.Basic)
-		{
-			if (destinationTracksData == null || destinationTracksData.Count == 0)
-				throw new Exception(string.Format("Error while creating {0} job, {1} is null or empty!", JobType.ShuntingUnload, (object)nameof(destinationTracksData)));
-			if (carsUnloadData == null || carsUnloadData.Count == 0)
-				throw new Exception(string.Format("Error while creating {0} job, {1} is null or empty!", JobType.ShuntingUnload, (object)nameof(carsUnloadData)));
-			List<CargoType> cargoTypePerCar = Main.GetCargoTypePerCar(carsUnloadData);
-			TransportTask transportTask1 = JobsGenerator.CreateTransportTask(carsUnloadData.SelectMany<CarsPerCargoType, Car>((Func<CarsPerCargoType, IEnumerable<Car>>)(loadData => (IEnumerable<Car>)loadData.cars)).ToList<Car>(), unloadMachine.WarehouseTrack, startingTrack, cargoTypePerCar);
-			for (int i = 0; i < carsUnloadData.Count; i++)
-			{
-				// Changed
-				if (carsUnloadData[i].cars.Any<Car>((Func<Car, bool>)(car => !CargoTypes.CanCarContainCargoType(car.carType, carsUnloadData[i].cargoType))))
-					throw new Exception(string.Format("Error while creating {0} job, not all cars from {1}[{2}] {4} can carry {3}!", (object)JobType.ShuntingUnload, (object)nameof(carsUnloadData), (object)i, (object)carsUnloadData[i].cargoType, (object) carsUnloadData[i]));
-				
-				if ((double)carsUnloadData[i].cars.Select<Car, float>((Func<Car, float>)(car => car.capacity)).Sum() < (double)carsUnloadData[i].totalCargoAmount)
-					throw new Exception(string.Format("Error while creating {0} job, {1} {2} to unload is beyond {3}[{4}].cars capacity!", (object)JobType.ShuntingUnload, (object)carsUnloadData[i].totalCargoAmount, (object)carsUnloadData[i].cargoType, (object)nameof(carsUnloadData), (object)i));
-				
-				if (!unloadMachine.IsCargoSupported(carsUnloadData[i].cargoType))
-					throw new Exception(string.Format("Error while creating {0} job, cargo type we want to unload [{1}] is not supported by {2}", (object)JobType.ShuntingUnload, (object)carsUnloadData[i].cargoType, (object)nameof(unloadMachine)));
-				
-				if ((double)carsUnloadData[i].cars.Select<Car, float>((Func<Car, float>)(car => car.LoadedCargoAmount)).Sum() < (double)carsUnloadData[i].totalCargoAmount || carsUnloadData[i].cars.Any<Car>((Func<Car, bool>)(car => car.CurrentCargoTypeInCar != carsUnloadData[i].cargoType)))
-				{
-					if (forceFillCargoIfMissing)
-					{
-						float totalCargoAmount = carsUnloadData[i].totalCargoAmount;
-						foreach (Car car in carsUnloadData[i].cars)
-						{
-							car.DumpCargo();
-							float cargoAmount = (double)totalCargoAmount > (double)car.capacity ? car.capacity : totalCargoAmount;
-							car.LoadCargo(cargoAmount, carsUnloadData[i].cargoType, (WarehouseMachine)null);
-							totalCargoAmount -= cargoAmount;
-						}
-					}
-					else
-						Debug.LogWarning((object)"Initial cargo state on car is not correct. This is valid only when loading save game!");
-				}
-			}
-			List<Task> parallelTasks1 = new List<Task>();
-			for (int index = 0; index < carsUnloadData.Count; ++index)
-				parallelTasks1.Add((Task)new WarehouseTask(carsUnloadData[index].cars, WarehouseTaskType.Unloading, unloadMachine, carsUnloadData[index].cargoType, carsUnloadData[index].totalCargoAmount, 0L));
-			ParallelTasks parallelTasks2 = new ParallelTasks(parallelTasks1, 0L);
-			List<Task> parallelTasks3 = new List<Task>();
-			for (int index = 0; index < destinationTracksData.Count; ++index)
-			{
-				TransportTask transportTask2 = JobsGenerator.CreateTransportTask(destinationTracksData[index].cars, destinationTracksData[index].track, unloadMachine.WarehouseTrack, (List<CargoType>)null);
-				parallelTasks3.Add((Task)transportTask2);
-			}
-			ParallelTasks parallelTasks4 = new ParallelTasks(parallelTasks3, 0L);
-			DV.Logic.Job.Job job = new DV.Logic.Job.Job((Task)new SequentialTasks(new List<Task>()
-				  {
-					(Task) transportTask1,
-					(Task) parallelTasks2,
-					(Task) parallelTasks4
-				  }, 0L), JobType.ShuntingUnload, timeLimit, initialWage, chainData, forcedJobId, requiredLicenses);
-			jobOriginStation.AddJobToStation(job);
-			return false;
-		}
-	}
-
-	[HarmonyPatch(typeof(JobsGenerator), "CreateShuntingUnloadJob")]
-	class CreateShuntingUnloadJob_Patch
+	[HarmonyPatch(typeof(StaticShuntingLoadJobDefinition), "GenerateJob")]
+	class StaticShuntingLoadJobDefinition_GenerateJob_Patch
 	{
 		static bool Prefix(
+			StaticShuntingLoadJobDefinition __instance, ref DV.Logic.Job.Job ___job,
 			Station jobOriginStation,
-			StationsChainData chainData,
-			Track startingTrack,
-			List<CarsPerTrack> destinationTracksData,
-			WarehouseMachine unloadMachine,
-			List<CarsPerCargoType> carsUnloadData,
-			bool forceFillCargoIfMissing = false,
-			float timeLimit = 0.0f,
+			float jobTimeLimit = 0.0f,
 			float initialWage = 0.0f,
 			string forcedJobId = null,
 			JobLicenses requiredLicenses = JobLicenses.Basic)
 		{
-			if (destinationTracksData == null || destinationTracksData.Count == 0)
-				throw new Exception(string.Format("Error while creating {0} job, {1} is null or empty!", (object)JobType.ShuntingUnload, (object)nameof(destinationTracksData)));
-			if (carsUnloadData == null || carsUnloadData.Count == 0)
-				throw new Exception(string.Format("Error while creating {0} job, {1} is null or empty!", (object)JobType.ShuntingUnload, (object)nameof(carsUnloadData)));
-			List<CargoType> cargoTypePerCar = Main.GetCargoTypePerCar(carsUnloadData);
-			TransportTask transportTask1 = JobsGenerator.CreateTransportTask(carsUnloadData.SelectMany<CarsPerCargoType, Car>((Func<CarsPerCargoType, IEnumerable<Car>>)(loadData => (IEnumerable<Car>)loadData.cars)).ToList<Car>(), unloadMachine.WarehouseTrack, startingTrack, cargoTypePerCar);
-			for (int i = 0; i < carsUnloadData.Count; i++)
+			try
 			{
-				if (carsUnloadData[i].cars.Any<Car>((Func<Car, bool>)(car => !CargoTypes.CanCarContainCargoType(car.carType, carsUnloadData[i].cargoType))))
-					throw new Exception(string.Format("Error while creating {0} job, not all cars from {1}[{2}] {4} can carry {3}!", (object)JobType.ShuntingUnload, (object)nameof(carsUnloadData), (object)i, (object)carsUnloadData[i].cargoType, (object) carsUnloadData[i]));
-				if ((double)carsUnloadData[i].cars.Select<Car, float>((Func<Car, float>)(car => car.capacity)).Sum() < (double)carsUnloadData[i].totalCargoAmount)
-					throw new Exception(string.Format("Error while creating {0} job, {1} {2} to unload is beyond {3}[{4}].cars capacity!", (object)JobType.ShuntingUnload, (object)carsUnloadData[i].totalCargoAmount, (object)carsUnloadData[i].cargoType, (object)nameof(carsUnloadData), (object)i));
-				if (!unloadMachine.IsCargoSupported(carsUnloadData[i].cargoType))
-					throw new Exception(string.Format("Error while creating {0} job, cargo type we want to unload [{1}] is not supported by {2}", (object)JobType.ShuntingUnload, (object)carsUnloadData[i].cargoType, (object)nameof(unloadMachine)));
-				if ((double)carsUnloadData[i].cars.Select<Car, float>((Func<Car, float>)(car => car.LoadedCargoAmount)).Sum() < (double)carsUnloadData[i].totalCargoAmount || carsUnloadData[i].cars.Any<Car>((Func<Car, bool>)(car => car.CurrentCargoTypeInCar != carsUnloadData[i].cargoType)))
+				if (__instance.carsPerStartingTrack != null && __instance.carsPerStartingTrack.Count > 0 &&
+				    (__instance.loadMachine != null && __instance.loadData != null) &&
+				    (__instance.loadData.Count > 0 && __instance.destinationTrack != null))
 				{
-					if (forceFillCargoIfMissing)
-					{
-						float totalCargoAmount = carsUnloadData[i].totalCargoAmount;
-						foreach (Car car in carsUnloadData[i].cars)
-						{
-							car.DumpCargo();
-							float cargoAmount = (double)totalCargoAmount > (double)car.capacity ? car.capacity : totalCargoAmount;
-							car.LoadCargo(cargoAmount, carsUnloadData[i].cargoType, (WarehouseMachine)null);
-							totalCargoAmount -= cargoAmount;
-						}
-					}
-					else
-						Debug.LogWarning((object)"Initial cargo state on car is not correct. This is valid only when loading save game!");
+					___job = JobsGenerator.CreateShuntingLoadJob(jobOriginStation, __instance.chainData,
+						__instance.carsPerStartingTrack, __instance.destinationTrack, __instance.loadMachine,
+						__instance.loadData, __instance.forceCorrectCargoStateOnCars, jobTimeLimit, initialWage,
+						forcedJobId, requiredLicenses);
+				}
+				else
+				{
+					__instance.carsPerStartingTrack = (List<CarsPerTrack>) null;
+					__instance.loadMachine = (WarehouseMachine) null;
+					__instance.loadData = (List<CarsPerCargoType>) null;
+					__instance.destinationTrack = (Track) null;
+					___job = (DV.Logic.Job.Job) null;
+					Debug.LogError((object) "ShuntingLoad job not created, bad parameters",
+						(UnityEngine.Object) __instance);
 				}
 			}
-			List<Task> parallelTasks1 = new List<Task>();
-			for (int index = 0; index < carsUnloadData.Count; ++index)
-				parallelTasks1.Add((Task)new WarehouseTask(carsUnloadData[index].cars, WarehouseTaskType.Unloading, unloadMachine, carsUnloadData[index].cargoType, carsUnloadData[index].totalCargoAmount, 0L));
-			ParallelTasks parallelTasks2 = new ParallelTasks(parallelTasks1, 0L);
-			List<Task> parallelTasks3 = new List<Task>();
-			for (int index = 0; index < destinationTracksData.Count; ++index)
+			catch (Exception e)
 			{
-				TransportTask transportTask2 = JobsGenerator.CreateTransportTask(destinationTracksData[index].cars, destinationTracksData[index].track, unloadMachine.WarehouseTrack, (List<CargoType>)null);
-				parallelTasks3.Add((Task)transportTask2);
+				Debug.Log(e);
+				string o = "cargoTypes: {";
+				foreach (var cpct in __instance.loadData)
+				{
+					o += cpct.cargoType + ", ";
+				}
+				o += "}\n";
+				Debug.Log(o);
 			}
-			ParallelTasks parallelTasks4 = new ParallelTasks(parallelTasks3, 0L);
-			DV.Logic.Job.Job job = new DV.Logic.Job.Job((Task)new SequentialTasks(new List<Task>()
-			  {
-				(Task) transportTask1,
-				(Task) parallelTasks2,
-				(Task) parallelTasks4
-			  }, 0L), JobType.ShuntingUnload, timeLimit, initialWage, chainData, forcedJobId, requiredLicenses);
-			jobOriginStation.AddJobToStation(job);
 			return false;
 		}
 	}
 
-	[HarmonyPatch(typeof(JobsGenerator), "CreateTransportJob")]
-	class CreateTransportJob_Patch
+	[HarmonyPatch(typeof(StaticShuntingUnloadJobDefinition), "GenerateJob")]
+	class StaticShuntingUnloadJobDefinition_GenerateJob_Patch
 	{
 		static bool Prefix(
+			StaticShuntingUnloadJobDefinition __instance, ref DV.Logic.Job.Job ___job,
 			Station jobOriginStation,
-			StationsChainData chainData,
-			List<Car> cars,
-			Track destinationTrack,
-			Track startingTrack = null,
-			List<CargoType> transportedCargoPerCar = null,
-			List<float> cargoAmountPerCar = null,
-			bool forceFillCargoIfMissing = false,
-			float timeLimit = 0.0f,
+			float jobTimeLimit = 0.0f,
 			float initialWage = 0.0f,
 			string forcedJobId = null,
-			JobLicenses requiredLicenses = JobLicenses.Basic)
+			JobLicenses requiredLicenses = JobLicenses.Basic
+		)
 		{
-			int num = transportedCargoPerCar != null ? 1 : 0;
-			bool flag = cargoAmountPerCar != null;
-			if (num != (flag ? 1 : 0))
-				throw new Exception("Error while creating transport job, one of transportedCargoPerCar and cargoAmountPerCar is not initialized!");
-			if ((num & (flag ? 1 : 0)) != 0)
+			try
 			{
-				if (transportedCargoPerCar.Count != cargoAmountPerCar.Count)
-					throw new Exception("Error while creating transport job, transportedCargoPerCar and cargoAmountPerCar count is not matching!");
-				for (int index = 0; index < cars.Count; ++index)
+				if (__instance.startingTrack != null && __instance.unloadMachine != null && (__instance.unloadData != null && __instance.unloadData.Count > 0) && (__instance.carsPerDestinationTrack != null && __instance.carsPerDestinationTrack.Count > 0))
 				{
-					if (!CargoTypes.CanCarContainCargoType(cars[index].carType, transportedCargoPerCar[index]))
-						throw new Exception(string.Format("Error while creating transport job, {0}[{1}] {4} can't carry specified {2}[{3}] {5}!", (object)nameof(cars), (object)index, (object)nameof(transportedCargoPerCar), (object)index, (object) cars[index], (object) transportedCargoPerCar[index]));
-					if ((double)cars[index].capacity < (double)cargoAmountPerCar[index])
-						throw new Exception(string.Format("Error while creating transport job, {0}[{1}] can't fit in {2}[{3}]", (object)nameof(cargoAmountPerCar), (object)index, (object)nameof(cars), (object)index));
-					if ((double)cars[index].LoadedCargoAmount < (double)cargoAmountPerCar[index] || cars[index].CurrentCargoTypeInCar != transportedCargoPerCar[index])
-					{
-						if (!forceFillCargoIfMissing)
-							throw new Exception(string.Format("Error while creating transport job, {0}[{1}] doesn't have required {2}!", (object)cars, (object)index, (object)nameof(cargoAmountPerCar)));
-						cars[index].DumpCargo();
-						cars[index].LoadCargo(cargoAmountPerCar[index], transportedCargoPerCar[index], (WarehouseMachine)null);
-					}
+					___job = JobsGenerator.CreateShuntingUnloadJob(jobOriginStation, __instance.chainData, __instance.startingTrack, __instance.carsPerDestinationTrack, __instance.unloadMachine, __instance.unloadData, __instance.forceCorrectCargoStateOnCars, jobTimeLimit, initialWage, forcedJobId, requiredLicenses);
+				}
+				else
+				{
+					___job = (DV.Logic.Job.Job)null;
+					Debug.LogError((object)"ShuntingUnload job not created, bad parameters", (UnityEngine.Object)__instance);
 				}
 			}
-			DV.Logic.Job.Job job = new DV.Logic.Job.Job((Task)JobsGenerator.CreateTransportTask(cars, destinationTrack, startingTrack, transportedCargoPerCar), JobType.Transport, timeLimit, initialWage, chainData, forcedJobId, requiredLicenses);
-			jobOriginStation.AddJobToStation(job);
+			catch (Exception e)
+			{
+				Debug.Log(e);
+				string o = "cargoTypes: {";
+				foreach (var cpct in __instance.unloadData)
+				{
+					o += cpct.cargoType + ", ";
+				}
+				o += "}\n";
+				Debug.Log(o);
+			}
 			return false;
 		}
 	}
 
+	[HarmonyPatch(typeof(StaticTransportJobDefinition), "GenerateJob")]
+	class StaticTransportJobDefinition_GenerateJob_Patch
+	{
+		static bool Prefix(
+			StaticTransportJobDefinition __instance, ref DV.Logic.Job.Job ___job,
+			Station jobOriginStation,
+			float jobTimeLimit = 0.0f,
+			float initialWage = 0.0f,
+			string forcedJobId = null,
+			JobLicenses requiredLicenses = JobLicenses.Basic
+			)
+		{
+			try
+			{
+				if (__instance.trainCarsToTransport != null && __instance.trainCarsToTransport.Count > 0 && (__instance.transportedCargoPerCar.Count == __instance.trainCarsToTransport.Count && __instance.cargoAmountPerCar.Count == __instance.trainCarsToTransport.Count) && (__instance.startingTrack != null && __instance.destinationTrack != null))
+				{
+					___job = JobsGenerator.CreateTransportJob(jobOriginStation, __instance.chainData, __instance.trainCarsToTransport, __instance.destinationTrack, __instance.startingTrack, __instance.transportedCargoPerCar, __instance.cargoAmountPerCar, __instance.forceCorrectCargoStateOnCars, jobTimeLimit, initialWage, forcedJobId, requiredLicenses);
+				}
+				else
+				{
+					__instance.trainCarsToTransport = (List<Car>)null;
+					__instance.startingTrack = (Track)null;
+					__instance.destinationTrack = (Track)null;
+					__instance.transportedCargoPerCar = (List<CargoType>)null;
+					__instance.cargoAmountPerCar = (List<float>)null;
+					___job = (DV.Logic.Job.Job)null;
+					Debug.LogError((object)"Transport job not created, bad parameters!");
+				}
+			}
+			catch (Exception e)
+			{
+				Debug.Log(e);
+				string o = "cargoTypes: {";
+				foreach (var ct in __instance.transportedCargoPerCar)
+				{
+					o += ct + ", ";
+				}
+				o += "}\n";
+				Debug.Log(o);
+			}
+			return false;
+		}
+	}
 }
