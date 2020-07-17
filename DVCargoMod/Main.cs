@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
-
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityModManagerNet;
 
@@ -19,6 +19,20 @@ namespace DVCargoMod
 			Debug.Log("DVCargoMod is loaded");
 			var harmony = new Harmony(modEntry.Info.Id);
 			harmony.PatchAll(Assembly.GetExecutingAssembly());
+		}
+
+		public static List<CargoType> GetCargoTypePerCar(
+			List<CarsPerCargoType> carsPerCargoTypeData)
+		{
+			List<CargoType> cargoTypeList = new List<CargoType>();
+			for (int index1 = 0; index1 < carsPerCargoTypeData.Count; ++index1)
+			{
+				List<Car> cars = carsPerCargoTypeData[index1].cars;
+				CargoType cargoType = carsPerCargoTypeData[index1].cargoType;
+				for (int index2 = 0; index2 < cars.Count; ++index2)
+					cargoTypeList.Add(cargoType);
+			}
+			return cargoTypeList;
 		}
 	}
 
@@ -191,8 +205,7 @@ namespace DVCargoMod
 		}
 	}
 
-	[HarmonyPatch(typeof(JobsGenerator))]
-	[HarmonyPatch("CreateShuntingLoadJob")]
+	[HarmonyPatch(typeof(JobsGenerator), "CreateShuntingLoadJob")]
 	class CreateShuntingLoadJob_Patch
 	{
 		static bool Prefix (
@@ -213,13 +226,13 @@ namespace DVCargoMod
 				throw new Exception(string.Format("Error while creating {0} job, {1} is null or empty!", JobType.ShuntingUnload, (object)nameof(destinationTracksData)));
 			if (carsUnloadData == null || carsUnloadData.Count == 0)
 				throw new Exception(string.Format("Error while creating {0} job, {1} is null or empty!", JobType.ShuntingUnload, (object)nameof(carsUnloadData)));
-			List<CargoType> cargoTypePerCar = JobsGenerator.GetCargoTypePerCar(carsUnloadData);
+			List<CargoType> cargoTypePerCar = Main.GetCargoTypePerCar(carsUnloadData);
 			TransportTask transportTask1 = JobsGenerator.CreateTransportTask(carsUnloadData.SelectMany<CarsPerCargoType, Car>((Func<CarsPerCargoType, IEnumerable<Car>>)(loadData => (IEnumerable<Car>)loadData.cars)).ToList<Car>(), unloadMachine.WarehouseTrack, startingTrack, cargoTypePerCar);
 			for (int i = 0; i < carsUnloadData.Count; i++)
 			{
 				// Changed
 				if (carsUnloadData[i].cars.Any<Car>((Func<Car, bool>)(car => !CargoTypes.CanCarContainCargoType(car.carType, carsUnloadData[i].cargoType))))
-					throw new Exception(string.Format("Error while creating {0} job, not all cars from {1}[{2}] {4} can carry {3}!", (object)JobType.ShuntingUnload, (object)nameof(carsUnloadData), (object)i, (object)carsUnloadData[i].cargoType, carsUnloadData[i]));
+					throw new Exception(string.Format("Error while creating {0} job, not all cars from {1}[{2}] {4} can carry {3}!", (object)JobType.ShuntingUnload, (object)nameof(carsUnloadData), (object)i, (object)carsUnloadData[i].cargoType, (object) carsUnloadData[i]));
 				
 				if ((double)carsUnloadData[i].cars.Select<Car, float>((Func<Car, float>)(car => car.capacity)).Sum() < (double)carsUnloadData[i].totalCargoAmount)
 					throw new Exception(string.Format("Error while creating {0} job, {1} {2} to unload is beyond {3}[{4}].cars capacity!", (object)JobType.ShuntingUnload, (object)carsUnloadData[i].totalCargoAmount, (object)carsUnloadData[i].cargoType, (object)nameof(carsUnloadData), (object)i));
@@ -267,8 +280,7 @@ namespace DVCargoMod
 		}
 	}
 
-	[HarmonyPatch(typeof(JobsGenerator))]
-	[HarmonyPatch("CreateShuntingUnloadJob")]
+	[HarmonyPatch(typeof(JobsGenerator), "CreateShuntingUnloadJob")]
 	class CreateShuntingUnloadJob_Patch
 	{
 		static bool Prefix(
@@ -289,12 +301,12 @@ namespace DVCargoMod
 				throw new Exception(string.Format("Error while creating {0} job, {1} is null or empty!", (object)JobType.ShuntingUnload, (object)nameof(destinationTracksData)));
 			if (carsUnloadData == null || carsUnloadData.Count == 0)
 				throw new Exception(string.Format("Error while creating {0} job, {1} is null or empty!", (object)JobType.ShuntingUnload, (object)nameof(carsUnloadData)));
-			List<CargoType> cargoTypePerCar = JobsGenerator.GetCargoTypePerCar(carsUnloadData);
+			List<CargoType> cargoTypePerCar = Main.GetCargoTypePerCar(carsUnloadData);
 			TransportTask transportTask1 = JobsGenerator.CreateTransportTask(carsUnloadData.SelectMany<CarsPerCargoType, Car>((Func<CarsPerCargoType, IEnumerable<Car>>)(loadData => (IEnumerable<Car>)loadData.cars)).ToList<Car>(), unloadMachine.WarehouseTrack, startingTrack, cargoTypePerCar);
 			for (int i = 0; i < carsUnloadData.Count; i++)
 			{
 				if (carsUnloadData[i].cars.Any<Car>((Func<Car, bool>)(car => !CargoTypes.CanCarContainCargoType(car.carType, carsUnloadData[i].cargoType))))
-					throw new Exception(string.Format("Error while creating {0} job, not all cars from {1}[{2}] {4} can carry {3}!", (object)JobType.ShuntingUnload, (object)nameof(carsUnloadData), (object)i, (object)carsUnloadData[i].cargoType, carsUnloadData[i]));
+					throw new Exception(string.Format("Error while creating {0} job, not all cars from {1}[{2}] {4} can carry {3}!", (object)JobType.ShuntingUnload, (object)nameof(carsUnloadData), (object)i, (object)carsUnloadData[i].cargoType, (object) carsUnloadData[i]));
 				if ((double)carsUnloadData[i].cars.Select<Car, float>((Func<Car, float>)(car => car.capacity)).Sum() < (double)carsUnloadData[i].totalCargoAmount)
 					throw new Exception(string.Format("Error while creating {0} job, {1} {2} to unload is beyond {3}[{4}].cars capacity!", (object)JobType.ShuntingUnload, (object)carsUnloadData[i].totalCargoAmount, (object)carsUnloadData[i].cargoType, (object)nameof(carsUnloadData), (object)i));
 				if (!unloadMachine.IsCargoSupported(carsUnloadData[i].cargoType))
@@ -339,8 +351,7 @@ namespace DVCargoMod
 		}
 	}
 
-	[HarmonyPatch(typeof(JobsGenerator))]
-	[HarmonyPatch("CreateTransportJob")]
+	[HarmonyPatch(typeof(JobsGenerator), "CreateTransportJob")]
 	class CreateTransportJob_Patch
 	{
 		static bool Prefix(
@@ -369,7 +380,7 @@ namespace DVCargoMod
 				for (int index = 0; index < cars.Count; ++index)
 				{
 					if (!CargoTypes.CanCarContainCargoType(cars[index].carType, transportedCargoPerCar[index]))
-						throw new Exception(string.Format("Error while creating transport job, {0}[{1}] {4} can't carry specified {2}[{3}] {5}!", (object)nameof(cars), (object)index, (object)nameof(transportedCargoPerCar), (object)index, cars[index], transportedCargoPerCar[index]));
+						throw new Exception(string.Format("Error while creating transport job, {0}[{1}] {4} can't carry specified {2}[{3}] {5}!", (object)nameof(cars), (object)index, (object)nameof(transportedCargoPerCar), (object)index, (object) cars[index], (object) transportedCargoPerCar[index]));
 					if ((double)cars[index].capacity < (double)cargoAmountPerCar[index])
 						throw new Exception(string.Format("Error while creating transport job, {0}[{1}] can't fit in {2}[{3}]", (object)nameof(cargoAmountPerCar), (object)index, (object)nameof(cars), (object)index));
 					if ((double)cars[index].LoadedCargoAmount < (double)cargoAmountPerCar[index] || cars[index].CurrentCargoTypeInCar != transportedCargoPerCar[index])
@@ -387,4 +398,5 @@ namespace DVCargoMod
 			return false;
 		}
 	}
+
 }
