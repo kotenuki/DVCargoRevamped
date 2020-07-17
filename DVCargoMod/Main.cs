@@ -209,7 +209,6 @@ namespace DVCargoMod
 	class CreateShuntingLoadJob_Patch
 	{
 		static bool Prefix (
-			out DV.Logic.Job.Job __result,
 			Station jobOriginStation,
 			StationsChainData chainData,
 			Track startingTrack,
@@ -275,7 +274,6 @@ namespace DVCargoMod
 					(Task) parallelTasks4
 				  }, 0L), JobType.ShuntingUnload, timeLimit, initialWage, chainData, forcedJobId, requiredLicenses);
 			jobOriginStation.AddJobToStation(job);
-			__result = job;
 			return false;
 		}
 	}
@@ -284,7 +282,6 @@ namespace DVCargoMod
 	class CreateShuntingUnloadJob_Patch
 	{
 		static bool Prefix(
-			out DV.Logic.Job.Job __result,
 			Station jobOriginStation,
 			StationsChainData chainData,
 			Track startingTrack,
@@ -346,7 +343,6 @@ namespace DVCargoMod
 				(Task) parallelTasks4
 			  }, 0L), JobType.ShuntingUnload, timeLimit, initialWage, chainData, forcedJobId, requiredLicenses);
 			jobOriginStation.AddJobToStation(job);
-			__result = job;
 			return false;
 		}
 	}
@@ -355,7 +351,6 @@ namespace DVCargoMod
 	class CreateTransportJob_Patch
 	{
 		static bool Prefix(
-			out DV.Logic.Job.Job __result,
 			Station jobOriginStation,
 			StationsChainData chainData,
 			List<Car> cars,
@@ -394,7 +389,6 @@ namespace DVCargoMod
 			}
 			DV.Logic.Job.Job job = new DV.Logic.Job.Job((Task)JobsGenerator.CreateTransportTask(cars, destinationTrack, startingTrack, transportedCargoPerCar), JobType.Transport, timeLimit, initialWage, chainData, forcedJobId, requiredLicenses);
 			jobOriginStation.AddJobToStation(job);
-			__result = job;
 			return false;
 		}
 	}
