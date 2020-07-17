@@ -146,6 +146,19 @@ namespace DVCargoMod
 
 			//TODO: cleanup dupe entries in lists
 			//HashSets?
+			var d = new Dictionary<CargoContainerType, List<TrainCarType>>();
+			foreach (var key in __result.Keys)
+			{
+				d[key] = new HashSet<TrainCarType>(__result[key]).ToList();
+			}
+			__result = d;
+
+			var c = new Dictionary<CargoType, List<CargoContainerType>>();
+			foreach (var key in cargoTypeToSupportedCarContainer.Keys)
+			{
+				c[key] = new HashSet<CargoContainerType>(cargoTypeToSupportedCarContainer[key]).ToList();
+			}
+			cargoTypeToSupportedCarContainer = c;
 
 			Debug.Log("Contents of _containerTypeToCarTypes:");
 			foreach (var key in __result.Keys)
