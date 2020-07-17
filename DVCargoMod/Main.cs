@@ -1,12 +1,13 @@
-﻿using System;
+﻿using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
-
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityModManagerNet;
 
 using HarmonyLib;
 using DV.Logic.Job;
+using DV.RenderTextureSystem.BookletRender;
 
 namespace DVCargoMod
 {
@@ -31,19 +32,6 @@ namespace DVCargoMod
 			var gasCars = new List<TrainCarType>() { TrainCarType.TankBlue, TrainCarType.TankOrange };
 			var chemCars = new List<TrainCarType>() { TrainCarType.TankBlack };
 
-			// Add cargo to cars:
-			/* TankerOil	--> Ammonia, SodiumHydroxide, Alcohol, Methane
-			 * TankerGas	--> Ammonia, SodiumHydroxide, CrudeOil, Diesel, Gasoline
-			 * TankerChem	--> Alcohol, Methane, CrudeOil, Diesel, Gasoline
-			 */
-			// So, need to access the train car list to add the car type
-			// Add the TrainCarTypes to the CargoContainerType's List:
-			/* TankerOil	--> TankOrange, TankBlue, TankBlack
-			 * TankerGas	--> TankYellow, TankWhite, TankChrome, TankBlack
-			 * TankerChem	--> TankORange, TankBlue, TankYellow, TankWhite, TankChrome
-			 */
-
-			//Debug.Log("Getting dictionary...");
 			//// Thank you to Cadde in the DV Discord
 			//var memberInfo = typeof(CargoTypes)
 			//	.GetField("_containerTypeToCarTypes", BindingFlags.NonPublic | BindingFlags.Static);
@@ -65,6 +53,8 @@ namespace DVCargoMod
 							Debug.Log("Adding to " + key + "...");
 							listOfTrainCarTypes.AddRange(gasCars);
 							listOfTrainCarTypes.AddRange(chemCars);
+							listOfTrainCarTypes.Add(TrainCarType.FlatbedEmpty);
+							listOfTrainCarTypes = listOfTrainCarTypes.Distinct().ToList();
 							Debug.Log("Added!");
 							break;
 						}
@@ -73,6 +63,8 @@ namespace DVCargoMod
 							Debug.Log("Adding to " + key + "...");
 							listOfTrainCarTypes.AddRange(oilCars);
 							listOfTrainCarTypes.AddRange(chemCars);
+							listOfTrainCarTypes.Add(TrainCarType.FlatbedEmpty);
+							listOfTrainCarTypes = listOfTrainCarTypes.Distinct().ToList();
 							Debug.Log("Added!");
 							break;
 						}
@@ -81,11 +73,94 @@ namespace DVCargoMod
 							Debug.Log("Adding to " + key + "...");
 							listOfTrainCarTypes.AddRange(oilCars);
 							listOfTrainCarTypes.AddRange(gasCars);
+							listOfTrainCarTypes.Add(TrainCarType.FlatbedEmpty);
+							listOfTrainCarTypes = listOfTrainCarTypes.Distinct().ToList();
+							Debug.Log("Added!");
+							break;
+						}
+						case CargoContainerType.Flatcar:
+						{
+							Debug.Log("Adding to " + key + "...");
+							listOfTrainCarTypes.AddRange(oilCars);
+							listOfTrainCarTypes.AddRange(gasCars);
+							listOfTrainCarTypes.AddRange(chemCars);
+							listOfTrainCarTypes = listOfTrainCarTypes.Distinct().ToList();
 							Debug.Log("Added!");
 							break;
 						}
 					}
 				}
+
+				Debug.Log("Dictionary modified");
+
+				var prop = typeof(CargoTypes).GetField("cargoTypeToSupportedCarContainer",
+					BindingFlags.NonPublic | BindingFlags.Static);
+				var cargoTypeToSupportedCarContainer = (Dictionary<CargoType, List<CargoContainerType>>)prop.GetValue(typeof(CargoTypes));
+				
+				Debug.Log("Modifying cargoTypeToSupportedCarContainer...");
+
+				var keys = cargoTypeToSupportedCarContainer.Keys;
+				foreach (var key in keys)
+				{
+					Debug.Log("Found key " + key);
+					var cargoType = key;
+					var listOfCargoContainerTypes = cargoTypeToSupportedCarContainer[key];
+
+					switch (cargoType)
+					{
+						case CargoType.CrudeOil:
+						case CargoType.Diesel:
+						case CargoType.Gasoline:
+						{
+							Debug.Log("Adding to " + key + "...");
+							listOfCargoContainerTypes.Add(CargoContainerType.TankerGas);
+							listOfCargoContainerTypes.Add(CargoContainerType.TankerChem);
+							listOfCargoContainerTypes.Add(CargoContainerType.Flatcar);
+							listOfCargoContainerTypes = listOfCargoContainerTypes.Distinct().ToList();
+							Debug.Log("Added!");
+							break;
+						}
+						case CargoType.Methane:
+						case CargoType.Alcohol:
+						{
+							Debug.Log("Adding to " + key + "...");
+							listOfCargoContainerTypes.Add(CargoContainerType.TankerOil);
+							listOfCargoContainerTypes.Add(CargoContainerType.TankerChem);
+							listOfCargoContainerTypes.Add(CargoContainerType.Flatcar);
+							listOfCargoContainerTypes = listOfCargoContainerTypes.Distinct().ToList();
+							Debug.Log("Added!");
+							break;
+						}
+						case CargoType.Ammonia:
+						case CargoType.SodiumHydroxide:
+						{
+							Debug.Log("Adding to " + key + "...");
+							listOfCargoContainerTypes.Add(CargoContainerType.TankerOil);
+							listOfCargoContainerTypes.Add(CargoContainerType.TankerGas);
+							listOfCargoContainerTypes.Add(CargoContainerType.Flatcar);
+							listOfCargoContainerTypes = listOfCargoContainerTypes.Distinct().ToList();
+							Debug.Log("Added!");
+							break;
+						}
+						case CargoType.Argon:
+						case CargoType.Nitrogen:
+						case CargoType.CryoHydrogen:
+						case CargoType.CryoOxygen:
+						case CargoType.ChemicalsIskar:
+						case CargoType.ChemicalsSperex:
+						{
+							Debug.Log("Adding to " + key + "...");
+							listOfCargoContainerTypes.Add(CargoContainerType.TankerOil);
+							listOfCargoContainerTypes.Add(CargoContainerType.TankerGas);
+							listOfCargoContainerTypes.Add(CargoContainerType.TankerChem);
+							listOfCargoContainerTypes = listOfCargoContainerTypes.Distinct().ToList();
+							Debug.Log("Added!");
+							break;
+						}
+					}
+				}
+
+				Debug.Log("cargoTypeToSupportedCarContainer modified!");
 
 				Debug.Log("Contents of _containerTypeToCarTypes:");
 				foreach (var key in __result.Keys)
@@ -100,79 +175,44 @@ namespace DVCargoMod
 					Debug.Log(key + " --> " + o);
 				}
 
-				Debug.Log("Dictionary modified");
-
-				var prop = typeof(CargoTypes).GetField("cargoTypeToSupportedCarContainer",
-					BindingFlags.NonPublic | BindingFlags.Static);
-				if (prop != null)
+				Debug.Log("Contents of cargoTypeToSupportedCarContainer:");
+				foreach (var key in cargoTypeToSupportedCarContainer.Keys)
 				{
-					Debug.Log("Modifying cargoTypeToSupportedCarContainer...");
-					var dict = (Dictionary<CargoType, List<CargoContainerType>>) prop.GetValue(typeof(CargoTypes));
-
-					var keys = dict.Keys;
-					foreach (var key in keys)
+					string o = "{";
+					foreach (var ele in cargoTypeToSupportedCarContainer[key])
 					{
-						Debug.Log("Found key " + key);
-						var cargoType = key;
-						var listOfCargoContainerTypes = dict[key];
-						// cargoTypes to add:
-						/* CargoType.CrudeOil, Diesel, Gasoline	--> CargoContainerType.TankerGas, CargoContainerType.TankerChem
-						 * CargoType.Methane, Alcohol			--> CargoContainerType.TankerOil, CargoContainerType.TankerChem
-						 * CargoType.Ammonia, SodiumHydroxide	--> CargoContainerType.TankerOil, CargoContainerType.TankerGas
-						 */
-						switch (cargoType)
-						{
-							case CargoType.CrudeOil:
-							case CargoType.Diesel:
-							case CargoType.Gasoline:
-							{
-								Debug.Log("Adding to " + key + "...");
-								listOfCargoContainerTypes.Add(CargoContainerType.TankerGas);
-								listOfCargoContainerTypes.Add(CargoContainerType.TankerChem);
-								Debug.Log("Added!");
-								break;
-							}
-							case CargoType.Methane:
-							case CargoType.Alcohol:
-							{
-								Debug.Log("Adding to " + key + "...");
-								listOfCargoContainerTypes.Add(CargoContainerType.TankerOil);
-								listOfCargoContainerTypes.Add(CargoContainerType.TankerChem);
-								Debug.Log("Added!");
-								break;
-							}
-							case CargoType.Ammonia:
-							case CargoType.SodiumHydroxide:
-							{
-								Debug.Log("Adding to " + key + "...");
-								listOfCargoContainerTypes.Add(CargoContainerType.TankerOil);
-								listOfCargoContainerTypes.Add(CargoContainerType.TankerGas);
-								Debug.Log("Added!");
-								break;
-							}
-						}
-
+						o += ele + ", ";
 					}
 
-					Debug.Log("cargoTypeToSupportedCarContainer modified!");
-
-					Debug.Log("Contents of cargoTypeToSupportedCarContainer:");
-					foreach (var key in dict.Keys)
-					{
-						string o = "{";
-						foreach (var ele in dict[key])
-						{
-							o += ele + ", ";
-						}
-
-						o += "}";
-						Debug.Log(key + " --> " + o);
-					}
+					o += "}";
+					Debug.Log(key + " --> " + o);
 				}
-				else
+
+				
+				var cctactm = typeof(CargoModelsData).GetField("CargoContainerToAvailableCargoTypeModels",
+					BindingFlags.Public | BindingFlags.Static);
+				var CargoContainerToAvailableCargoTypeModels =
+					(Dictionary<CargoContainerType, Dictionary<CargoType, List<string>>>) cctactm.GetValue(
+						typeof(CargoModelsData));
+
+				var cttsi = typeof(IconsSpriteMap).GetField("cargoTypeToSpriteIcon",
+					BindingFlags.Public | BindingFlags.Static);
+				var cargoTypeToSpriteIcon = (Dictionary<CargoType, Sprite>)cttsi.GetValue(typeof(IconsSpriteMap));
+
+				var flatcarFluidCargoTypes = new List<CargoType>()
+					{CargoType.CrudeOil, CargoType.Gasoline, CargoType.Diesel, CargoType.Methane, CargoType.Alcohol, CargoType.Ammonia, CargoType.SodiumHydroxide};
+
+				foreach (var cargoType in flatcarFluidCargoTypes)
 				{
-					Debug.Log("cargoTypeToSupportedCarContainer was null");
+					// Add cargo models to flatcars
+					CargoContainerToAvailableCargoTypeModels[CargoContainerType.Flatcar][cargoType] = new List<string>() { "C_FlatcarISOTankYellow2_Explosive" };
+					// Add icons to flatcars in job booklet	
+					cargoTypeToSpriteIcon[cargoType] = Resources.Load("CarFlatcar_TankISO", typeof(Sprite)) as Sprite;
 				}
+
+				
+
+
 			}
 		}
 	}

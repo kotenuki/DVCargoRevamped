@@ -2,7 +2,7 @@
 
 ## Gases and Fluids
 
-Cars: Tankers, Flatcars (Gas tanks)
+Cars: Tankers, Flatcars
 
 * Crude Oil
 * Diesel
@@ -11,9 +11,10 @@ Cars: Tankers, Flatcars (Gas tanks)
 * Alcohol
 * Ammonia
 * Sodium Hydroxide
-* (Cryo Oxygen)?
-* (Cryo Hydrogen)?
-* (Nitrogen)?
+* Argon
+* Nitrogen
+* Cryo Oxygen
+* Cryo Hydrogen
 * [Iskar/Sperex] Chemicals
 
 ## Non-Perishables
