@@ -4,49 +4,49 @@
 
 Cars: Tankers, Flatcars
 
-* Crude Oil
-* Diesel
-* Gasoline
-* Methane
-* Alcohol
-* Ammonia
-* Sodium Hydroxide
-* Argon
-* Nitrogen
-* Cryo Oxygen
-* Cryo Hydrogen
-* [Iskar/Sperex] Chemicals
+* Crude Oil (T)
+* Diesel (T)
+* Gasoline (T)
+* Methane (T)
+* Alcohol (T)
+* Ammonia (T)
+* Sodium Hydroxide (T)
+* Argon (F)
+* Nitrogen (F)
+* Cryo Oxygen (F)
+* Cryo Hydrogen (F)
+* [Iskar/Sperex] Chemicals (F)
 
 ## Non-Perishables
 
 Cars: Flatcars, Boxcars
 
-* [AAG/Iskar/Krugmann/Novae/Traeg] Electronics
-* [AAG/Iskar/Krugmann/Novae/Traeg] Tooling
-* [Neo Gamma/Novae/Obco/Traed] Apparel
-* [Iskar/Sperex] Chemicals
-* Boards (wooden)
-* Plywood
-* Steel [Bent Plates/Billets/Rolls/Slabs]
-* Steel Rails
-* Bread
-* Cat Food (Sunomni)
-* Canned Food (Sunomni)
-* Dairy products (Sunomni)
-* Meat products (Sunomni)
-* Medicine (Chemlek)
+* [AAG/Iskar/Krugmann/Novae/Traeg] Electronics (F)
+* [AAG/Iskar/Krugmann/Novae/Traeg] Tooling (FB`)
+* [Neo Gamma/Novae/Obco/Traed] Apparel (F)
+* [Iskar/Sperex] Chemicals (FB)
+* Boards (wooden) (F)
+* Plywood (F)
+* Steel [Bent Plates/Billets/Rolls/Slabs] (F)
+* Steel Rails (F)
+* Bread (B)
+* Cat Food (Sunomni) (FR)
+* Canned Food (Sunomni) (F)
+* Dairy products (Sunomni) (FR)
+* Meat products (Sunomni) (FR)
+* Medicine (Chemlek) (FR)
 
 ## Perishables
 
-Cars: Boxcars, Refrigerator Cars, Flatbed Cars (Sunomni Containers)
+Cars: Boxcars, Refrigerator Cars, Flatbed Cars
 
-* Bread
-* Chicken
-* Cows
-* Goats
-* Pigs
-* Sheep
-* Cat Food (Sunomni)
-* Canned Food (Sunomni)
-* Dairy products (Sunomni)
-* Medicine (Chemlek)
+* Bread (B)
+* Chicken (B)
+* Cows (B)
+* Goats (B)
+* Pigs (B)
+* Sheep (B)
+* Cat Food (Sunomni) (FR)
+* Canned Food (Sunomni) (F)
+* Dairy products (Sunomni) (FR)
+* Medicine (Chemlek) (FR)
