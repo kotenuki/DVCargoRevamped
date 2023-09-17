@@ -19,10 +19,10 @@ Cars: Tankers, Flatcars
 
 ## Non-Perishables
 
-Cars: Flatcars, Boxcars
+Cars: Flatcars, Boxcars, Reefers, Gondolas
 
 * [AAG/Iskar/Krugmann/Novae/Traeg] Electronics (F)
-* [AAG/Iskar/Krugmann/Novae/Traeg] Tooling (FB`)
+* [AAG/Iskar/Krugmann/Novae/Traeg] Tooling (FB)
 * [Neo Gamma/Novae/Obco/Traed] Apparel (F)
 * [Iskar/Sperex] Chemicals (FB)
 * Boards (wooden) (F)
