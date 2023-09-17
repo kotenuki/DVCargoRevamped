@@ -1,0 +1,9 @@
+{
+	"Releases": [
+		{
+			"Id": "DvCargoMod",
+			"Version": "1.0.0",
+			"DownloadUrl": "https://github.com/bigyihsuan/DVCargoMod/releases/download/TAG/FILE_NAME.zip"
+		}
+	]
+}

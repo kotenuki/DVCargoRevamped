@@ -1,49 +1,59 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVCargoMod\\DVCargoMod.csproj": {}
+    "D:\\Programming\\GithubRepos\\DVCargoMod\\DvCargoMod\\DvCargoMod.csproj": {}
   },
   "projects": {
-    "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVCargoMod\\DVCargoMod.csproj": {
-      "version": "0.0.0",
+    "D:\\Programming\\GithubRepos\\DVCargoMod\\DvCargoMod\\DvCargoMod.csproj": {
+      "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVCargoMod\\DVCargoMod.csproj",
-        "projectName": "DVCargoMod",
-        "projectPath": "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVCargoMod\\DVCargoMod.csproj",
+        "projectUniqueName": "D:\\Programming\\GithubRepos\\DVCargoMod\\DvCargoMod\\DvCargoMod.csproj",
+        "projectName": "DvCargoMod",
+        "projectPath": "D:\\Programming\\GithubRepos\\DVCargoMod\\DvCargoMod\\DvCargoMod.csproj",
         "packagesPath": "C:\\Users\\bigyi\\.nuget\\packages\\",
-        "outputPath": "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVCargoMod\\obj\\",
+        "outputPath": "D:\\Programming\\GithubRepos\\DVCargoMod\\DvCargoMod\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
           "C:\\Users\\bigyi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net47"
+          "net48"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net47": {
+          "net48": {
+            "targetAlias": "net48",
             "projectReferences": {}
           }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
         }
       },
       "frameworks": {
-        "net47": {
+        "net48": {
+          "targetAlias": "net48",
           "dependencies": {
-            "Lib.Harmony": {
+            "Microsoft.CSharp": {
               "target": "Package",
-              "version": "[2.0.1, )"
+              "version": "[4.7.0, )"
+            },
+            "Nullable": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.3.1, )"
+            },
+            "UnityModManager": {
+              "target": "Package",
+              "version": "[0.27.2, )"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

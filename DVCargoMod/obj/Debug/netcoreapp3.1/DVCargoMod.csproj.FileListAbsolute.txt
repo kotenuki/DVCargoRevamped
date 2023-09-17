@@ -1,4 +1,0 @@
-D:\Programming\GitHub Repos\DVCargoMod\DVCargoMod\obj\Debug\netcoreapp3.1\DVCargoMod.csprojAssemblyReference.cache
-D:\Programming\GitHub Repos\DVCargoMod\DVCargoMod\obj\Debug\netcoreapp3.1\DVCargoMod.AssemblyInfoInputs.cache
-D:\Programming\GitHub Repos\DVCargoMod\DVCargoMod\obj\Debug\netcoreapp3.1\DVCargoMod.AssemblyInfo.cs
-D:\Programming\GitHub Repos\DVCargoMod\DVCargoMod\obj\Debug\netcoreapp3.1\DVCargoMod.csproj.CoreCompileInputs.cache

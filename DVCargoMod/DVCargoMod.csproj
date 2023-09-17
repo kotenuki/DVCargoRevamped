@@ -1,38 +1,40 @@
 <Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<AssemblyName>DvCargoMod</AssemblyName>
+		<TargetFramework>net48</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+		<WarningsAsErrors>CS8600;CS8602;CS8603</WarningsAsErrors>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <OutputType>Library</OutputType>
-    <TargetFramework>net47</TargetFramework>
-    <StartupObject></StartupObject>
-    <Version>0.0.0</Version>
-    <Authors>bigyihsuan</Authors>
-    <FrameworkPathOverride>D:\SteamLibrary\steamapps\common\Derail Valley\DerailValley_Data\Managed\</FrameworkPathOverride>
-  </PropertyGroup>
+	<!-- Derail Valley -->
+	<ItemGroup>
+		<Reference Include="Assembly-CSharp"/>
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Lib.Harmony" Version="2.0.1" />
-    <!--<PackageReference Include="RedworkDE.Publicizer" Version="0.1.0" />
-    <PublicizeAssembly Include="Assembly-CSharp" Private="True" Readonly="True" />-->
-  </ItemGroup>
+	<!-- Unity -->
+	<ItemGroup>
+		<Reference Include="UnityEngine"/>
+		<Reference Include="UnityEngine.CoreModule"/>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Assembly-CSharp" />
-    <Reference Include="Assembly-CSharp-firstpass" />
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Derail Valley\DerailValley_Data\Managed\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Derail Valley\DerailValley_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Derail Valley\DerailValley_Data\Managed\UnityEngine.IMGUIModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Derail Valley\DerailValley_Data\Managed\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityModManager">
-      <HintPath>..\..\..\..\SteamLibrary\steamapps\common\Derail Valley\DerailValley_Data\Managed\UnityModManager\UnityModManager.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	<!-- Mod Loader -->
+	<ItemGroup>
+		<PackageReference Include="UnityModManager" Version="0.27.2"/>
+	</ItemGroup>
 
+	<!-- Null Checking -->
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CSharp" Version="4.7.0"/>
+		<PackageReference Include="Nullable" Version="1.3.1" PrivateAssets="all"/>
+	</ItemGroup>
+
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
+		<!-- Copy to build folder -->
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="../build/"/>
+
+		<!-- Package after Release build -->
+		<Exec Condition="'$(ConfigurationName)' == 'Release' And '$(OS)' == 'Windows_NT'" Command="powershell -executionpolicy bypass -Command &quot;(../package.ps1)&quot;"/>
+		<Exec Condition="'$(ConfigurationName)' == 'Release' And '$(OS)' != 'Windows_NT'" Command="pwsh -Command &quot;(../package.ps1)&quot;"/>
+	</Target>
 </Project>

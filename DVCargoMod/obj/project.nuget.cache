@@ -1,10 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "6yoigt8nHHPP4KLN6+u2SZ0pLWhOKZbje6j2D/f1lWbl8kyRZ4wCOpqqQBLdr8GGQaqzsZiKrqh2o64FDpnQlw==",
+  "dgSpecHash": "le9H2Ae4PDYIFYyIx94wknaMyICg72b5N2ov0cBRjSd0V7oR12KoH5H7Xub2rptxB8163CDRuOieBJXAoW1S0A==",
   "success": true,
-  "projectFilePath": "D:\\Programming\\GitHub Repos\\DVCargoMod\\DVCargoMod\\DVCargoMod.csproj",
+  "projectFilePath": "D:\\Programming\\GithubRepos\\DVCargoMod\\DvCargoMod\\DvCargoMod.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\bigyi\\.nuget\\packages\\lib.harmony\\2.0.1\\lib.harmony.2.0.1.nupkg.sha512"
+    "C:\\Users\\bigyi\\.nuget\\packages\\dnlib\\3.1.0\\dnlib.3.1.0.nupkg.sha512",
+    "C:\\Users\\bigyi\\.nuget\\packages\\lib.harmony\\2.2.2\\lib.harmony.2.2.2.nupkg.sha512",
+    "C:\\Users\\bigyi\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\bigyi\\.nuget\\packages\\nullable\\1.3.1\\nullable.1.3.1.nupkg.sha512",
+    "C:\\Users\\bigyi\\.nuget\\packages\\unitymodmanager\\0.27.2\\unitymodmanager.0.27.2.nupkg.sha512"
   ],
   "logs": []
 }
