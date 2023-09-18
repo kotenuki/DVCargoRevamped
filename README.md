@@ -1,70 +1,15 @@
-# Cargo Categories
+# DvCargoMod
 
-## Gases and Fluids
+Allows more cargos to be loaded into more different cars.
 
-Cars: Tankers, Flatcars
+Currently, it allows:
 
-* Crude Oil (T)
-* Diesel (T)
-* Gasoline (T)
-* Methane (T)
-* Alcohol (T)
-* Ammonia (T)
-* Sodium Hydroxide (T)
-* Argon (F)
-* Nitrogen (F)
-* Cryo Oxygen (F)
-* Cryo Hydrogen (F)
-* [Iskar/Sperex] Chemicals (F)
+- All tanker car loads in all other tankers
+- Containerized fluids and gases (e.g. CryoOxygen, Argon) in takers
+- Certain flatcar loads (e.g. Boards, SteelRolls) in box cars
 
-| Cargo           | Prefabs                                |
-| --------------- | -------------------------------------- |
-| Alcohol         | C_Tank_Explosive                       |
-| Ammonia         | C_Tank_ToxicCorrosive                  |
-| Argon           | C_Flatcar_ISOTankYellowAsphyxiating_x2 |
-| ChemicalsIskar  |                                        |
-| ChemicalsIskar  | C_Flatcar_ContainerIskar               |
-| ChemicalsSperex |                                        |
-| ChemicalsSperex | C_Flatcar_ContainerSperex              |
-| CrudeOil        | C_Tank_Flammable                       |
-| CryoHydrogen    | C_Flatcar_ISOTankYellowExplosive_x2    |
-| CryoOxygen      | C_Flatcar_ISOTankYellowOxydizing_x2    |
-| Diesel          | C_Tank_Flammable                       |
-| Gasoline        | C_Tank_Explosive                       |
-| Methane         | C_Tank_Explosive                       |
-| Nitrogen        | C_Flatcar_ISOTankYellowAsphyxiating_x2 |
-| SodiumHydroxide | C_Tank_Corrosive                       |
-
-## Non-Perishables
-
-Cars: Flatcars, Boxcars, Gondolas
-
-* [AAG/Iskar/Krugmann/Novae/Traeg] Electronics (F)
-* [AAG/Iskar/Krugmann/Novae/Traeg] Tooling (FB)
-* [Neo Gamma/Novae/Obco/Traed] Apparel (F)
-* [Iskar/Sperex] Chemicals (FB)
-* Boards (wooden) (F)
-* Plywood (F)
-* Steel [Bent Plates/Billets/Rolls/Slabs] (F)
-* Steel Rails (F)
-* Bread (B)
-* Cat Food (Sunomni) (FR)
-* Canned Food (Sunomni) (F)
-* Dairy products (Sunomni) (FR)
-* Meat products (Sunomni) (FR)
-* Medicine (Chemlek) (FR)
-
-## Perishables
-
-Cars: Boxcars, Refrigerator Cars, Flatbed Cars
-
-* Bread (B)
-* Chicken (B)
-* Cows (B)
-* Goats (B)
-* Pigs (B)
-* Sheep (B)
-* Cat Food (Sunomni) (FR)
-* Canned Food (Sunomni) (F)
-* Dairy products (Sunomni) (FR)
-* Medicine (Chemlek) (FR)
+If you know how to use the Unity Editor and how to make prefabs,
+feel free to make a pull request!
+If I get around to it,
+prefabs will be needed for flatcars, gondolas, and hoppers
+to represet the visible cargo.
