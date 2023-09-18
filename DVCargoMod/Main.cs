@@ -1,14 +1,12 @@
-﻿using DV.ThingTypes;
-using DV.ThingTypes.TransitionHelpers;
-using HarmonyLib;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using TinyJson;
+using DV.ThingTypes;
+using DV.ThingTypes.TransitionHelpers;
+using HarmonyLib;
 using UnityEngine;
 using UnityModManagerNet;
-
 using static DV.ThingTypes.CargoType;
 using static DV.ThingTypes.TrainCarType;
 
@@ -19,8 +17,8 @@ public static class Main
 	public static UnityModManager.ModEntry? mod;
 	public const string PREFIX = "[DvCargoMod] ";
 
-	private const bool SKIP_ORIGINAL = false;
-	private const bool KEEP_ORIGINAL = true;
+	public const bool SKIP_ORIGINAL = false;
+	public const bool KEEP_ORIGINAL = true;
 	private static bool Load(UnityModManager.ModEntry modEntry)
 	{
 		Harmony? harmony = null;
@@ -42,109 +40,91 @@ public static class Main
 	}
 }
 
-// [HarmonyPatch(typeof(DVObjectModel), nameof(DVObjectModel.RecalculateCaches))]
-// class DVObjectModel_RecalculateCaches_Patch
-// {
-// 	static void Postfix()
-// 	{
-// 		Main.Unify();
-// 	}
-// }
-[HarmonyPatch(typeof(DVObjectModel), nameof(DVObjectModel.CarTypeToLoadableCargo), MethodType.Getter)]
-class DVObjectModel_CarTypeToLoadableCargo_Patch
+[HarmonyPatch(typeof(DVObjectModel), nameof(DVObjectModel.RecalculateCaches))]
+class DVObjectModel_RecalculateCaches_Patch
 {
-	static void Postfix(ref Dictionary<TrainCarType_v2, List<CargoType_v2>> __result)
+	static void Postfix(
+		ref DVObjectModel __instance,
+		ref Dictionary<TrainCarType_v2, List<CargoType_v2>> ____carTypeToLoadableCargo,
+		ref Dictionary<CargoType_v2, List<TrainCarType_v2>> ____cargoToLoadableCarTypes
+	)
 	{
-		// Debug.Log(Main.PREFIX + "DVObjectModel.CarTypeToLoadableCargo called");
-		var carToCargo = __result.ToDictionary(e => e.Key, e => e.Value);
-		foreach (KeyValuePair<TrainCarType_v2, List<CargoType_v2>> pair in carToCargo)
+		// link liveries to traincartypes
+		var carTypes = new List<TrainCarType_v2>();
+		foreach (var carType in __instance.carTypes)
 		{
-			// Debug.Log(Main.PREFIX + pair.Key.id.ToString());
-			if (pair.Key.id.Contains("Tank"))
+			if (carType.id.Contains("Tank"))
 			{
-				// Debug.Log(Main.PREFIX + $"adding tank car cargoes to car {pair.Key.id}");
-				__result[pair.Key] = Cargoes.tankCarCargoes;
+				// add all tankers
+				carType.liveries.AddRange(Cars.tankers.ConvertAll(t => t.ToV2()));
 			}
-			// else
-			// {
-			// 	carToCargo.AddItem(pair);
-			// }
+			carType.liveries = carType.liveries.Distinct().ToList();
+			carTypes.Add(carType);
 		}
-		// foreach (KeyValuePair<TrainCarType_v2, List<CargoType_v2>> pair in __result)
-		// {
-		// 	Debug.Log(Main.PREFIX + $"{pair.Key}={string.Join(",", pair.Value.ConvertAll(e => e.v1.ToString()))}");
-		// }
-	}
-}
-[HarmonyPatch(typeof(DVObjectModel), nameof(DVObjectModel.CargoToLoadableCarTypes), MethodType.Getter)]
-class DVObjectModel_CargoToLoadableCarTypes_Patch
-{
-	static void Postfix(ref Dictionary<CargoType_v2, List<TrainCarType_v2>> __result)
-	{
-		// Debug.Log(Main.PREFIX + "DVObjectModel.CargoToLoadableCarTypes called");
-		var cargoToCar = __result.ToDictionary(e => e.Key, e => e.Value);
-		foreach (KeyValuePair<CargoType_v2, List<TrainCarType_v2>> pair in cargoToCar)
-		{
-			// Debug.Log(Main.PREFIX + pair.Key.id.ToString());
-			var cargo = pair.Key;
-			if (Cargoes.tankCarCargoes.Contains(cargo))
-			{
-				// Debug.Log(Main.PREFIX + $"adding fluid cars to cargo {pair.Key.id}");
-				// Debug.Log(Main.PREFIX + $"{__result[pair.Key].ConvertAll(e => e.v1)}");
-				var loadableCars = new List<CargoType_v2.LoadableInfo>();
-				foreach (var car in Cars.fluidCars)
-				{
-					var prefabs = new GameObject[] { };
-					foreach (var livery in car.liveries)
-					{
-						if (TrainCarAndCargoDamageProperties.IsCargoFlammable(cargo.v1) && Cars.tankers.Contains(livery.v1))
-						{
-							prefabs = LoadableInfos.tankFlammable.cargoPrefabVariants;
-						}
-						else if (TrainCarAndCargoDamageProperties.IsCargoExplosive(cargo.v1) && Cars.tankers.Contains(livery.v1))
-						{
-							prefabs = LoadableInfos.tankExplosive.cargoPrefabVariants;
-						}
-						else if (TrainCarAndCargoDamageProperties.IsCargoCorrosiveLiquid(cargo.v1) && Cars.tankers.Contains(livery.v1))
-						{
-							prefabs = LoadableInfos.tankCorrosive.cargoPrefabVariants;
-						}
-					}
-					var info = new CargoType_v2.LoadableInfo(car, prefabs);
-					loadableCars.Add(info);
-				}
-				cargo.loadableCarTypes = loadableCars.Distinct().ToArray();
-				__result[cargo] = Cars.fluidCars;
+		__instance.carTypes = carTypes;
 
-				foreach (var e in pair.Key.loadableCarTypes)
+		// link traincartypes to cargoes
+		var cargoes = new List<CargoType_v2>();
+		foreach (var cargo in __instance.cargos)
+		{
+			if (Cargoes.tankCarCargoes.Contains(cargo.v1))
+			{
+				// Debug.Log($"begin {cargo.v1}");
+				var tankerLiveries = Cars.tankers;
+				// Debug.Log("after tankerLiveries");
+				var tankerTypes = __instance.carTypes.Where(carType => carType.liveries.Any(l => tankerLiveries.Contains(l.v1)));
+				// Debug.Log("after tankerTypes");
+				var tankerPrefab = new GameObject[] { };
+				if (TrainCarAndCargoDamageProperties.IsCargoFlammable(cargo.v1))
 				{
-					Debug.Log(Main.PREFIX + $"loadableCarTypes {pair.Key.v1} {e.carType} {string.Join(",", e.cargoPrefabVariants.ToList().ConvertAll(p => p.name))}");
+					tankerPrefab = LoadableInfos.tankFlammable;
 				}
+				else if (TrainCarAndCargoDamageProperties.IsCargoExplosive(cargo.v1))
+				{
+					tankerPrefab = LoadableInfos.tankExplosive;
+				}
+				else if (TrainCarAndCargoDamageProperties.IsCargoCorrosiveLiquid(cargo.v1))
+				{
+					tankerPrefab = LoadableInfos.tankCorrosive;
+				}
+				// Debug.Log("after tankerPrefab");
+				var tankerInfo = tankerTypes.Select(tct2 => new CargoType_v2.LoadableInfo(tct2, tankerPrefab)).ToArray();
+				// Debug.Log("after tankerInfo");
+				cargo.loadableCarTypes = tankerInfo;
+				// Debug.Log($"finished {cargo.v1}");
 			}
-			// else
-			// {
-			// 	cargoToCar.AddItem(pair);
-			// }
+			cargoes.Add(cargo);
+			// Debug.Log(Main.PREFIX + $"{cargo.id}: [{cargo.loadableCarTypes.Select(info => info.carType.id).Join(delimiter: ",")}]");
+			// Debug.Log(Main.PREFIX + $"{cargo.id}: [{cargo.loadableCarTypes.SelectMany(info => info.carType.liveries).Select(l => l.id).Join(delimiter: ",")}]");
 		}
-		// foreach (KeyValuePair<CargoType_v2, List<TrainCarType_v2>> pair in __result)
-		// {
-		// 	Debug.Log(Main.PREFIX + $"{pair.Key}={string.Join(",", pair.Value.ConvertAll(e => e.id))}");
-		// }
+		__instance.cargos = cargoes;
+
+		// recalculate dicts
+		// Debug.Log("recalculate dicts");
+		____carTypeToLoadableCargo = __instance.carTypes.ToDictionary(
+			(TrainCarType_v2 c) => c,
+			(TrainCarType_v2 c) => cargoes.Where(
+				(CargoType_v2 cg) => cg.loadableCarTypes.Any(
+					(CargoType_v2.LoadableInfo lct) => lct.carType == c)).ToList());
+		____cargoToLoadableCarTypes = cargoes.ToDictionary(
+			(CargoType_v2 c) => c,
+			(CargoType_v2 c) => c.loadableCarTypes.Select(
+				(CargoType_v2.LoadableInfo lct) => lct.carType).ToList());
 	}
 }
 
 static class Cargoes
 {
-	public static List<CargoType_v2> tankCarCargoes = new List<CargoType>
+	public static List<CargoType> tankCarCargoes = new List<CargoType>
 	{
 		CrudeOil, Diesel, Gasoline,
 		Methane, Alcohol,
 		Ammonia, SodiumHydroxide,
-		Argon, Nitrogen, CryoHydrogen, CryoOxygen,
-		ChemicalsIskar, ChemicalsSperex,
-	}.ConvertAll(c => c.ToV2());
+		// TODO: Argon, Nitrogen, CryoHydrogen, CryoOxygen,
+		// TODO: ChemicalsIskar, ChemicalsSperex,
+	};
 
-	public static List<CargoType_v2> nonPerishableCargoes = new List<CargoType>
+	public static List<CargoType> nonPerishableCargoes = new List<CargoType>
 	{
 		ElectronicsAAG, ElectronicsIskar, ElectronicsKrugmann, ElectronicsNovae, ElectronicsTraeg, ClothingNeoGamma,
 		ClothingNovae, ClothingObco, ClothingTraeg,
@@ -153,36 +133,35 @@ static class Cargoes
 		SteelBentPlates, SteelBillets, SteelRails, SteelRolls, SteelSlabs,
 		Bread, CatFood, CannedFood, DairyProducts, MeatProducts,
 		Medicine,
-	}.ConvertAll(c => c.ToV2());
+	};
 
 
-	public static List<CargoType_v2> perishableCargoes = new List<CargoType>
+	public static List<CargoType> perishableCargoes = new List<CargoType>
 	{
 		Bread, CatFood, CannedFood, DairyProducts, MeatProducts,
 		Medicine,
 		Chickens, Cows, Goats, Pigs, Sheep,
-	}.ConvertAll(c => c.ToV2());
+	};
 
-	public static List<CargoType_v2> bulkCargoes = new List<CargoType>
+	public static List<CargoType> bulkCargoes = new List<CargoType>
 	{
 		CargoType.Coal, IronOre,
 		Logs,
 		ScrapMetal
-	}.ConvertAll(c => c.ToV2());
+	};
 
 
 }
 static class LoadableInfos
 {
-	public static CargoType_v2.LoadableInfo tankFlammable = CargoType.CrudeOil.ToV2().loadableCarTypes[0];
-	public static CargoType_v2.LoadableInfo tankExplosive = CargoType.Gasoline.ToV2().loadableCarTypes[0];
-	public static CargoType_v2.LoadableInfo tankCorrosive = CargoType.Ammonia.ToV2().loadableCarTypes[0];
-
-	public static CargoType_v2.LoadableInfo flatcarAsph = CargoType.Argon.ToV2().loadableCarTypes[0];
-	public static CargoType_v2.LoadableInfo flatcarIskar = CargoType.ChemicalsIskar.ToV2().loadableCarTypes[0];
-	public static CargoType_v2.LoadableInfo flatcarSperex = CargoType.ChemicalsSperex.ToV2().loadableCarTypes[0];
-	public static CargoType_v2.LoadableInfo flatcarExplosive = CargoType.CryoHydrogen.ToV2().loadableCarTypes[0];
-	public static CargoType_v2.LoadableInfo flatcarOxy = CargoType.CryoOxygen.ToV2().loadableCarTypes[0];
+	public static GameObject[] tankFlammable = CargoType.CrudeOil.ToV2().loadableCarTypes[0].cargoPrefabVariants;
+	public static GameObject[] tankExplosive = CargoType.Gasoline.ToV2().loadableCarTypes[0].cargoPrefabVariants;
+	public static GameObject[] tankCorrosive = CargoType.Ammonia.ToV2().loadableCarTypes[0].cargoPrefabVariants;
+	public static GameObject[] flatcarAsph = CargoType.Argon.ToV2().loadableCarTypes[0].cargoPrefabVariants;
+	public static GameObject[] flatcarIskar = CargoType.ChemicalsIskar.ToV2().loadableCarTypes[0].cargoPrefabVariants;
+	public static GameObject[] flatcarSperex = CargoType.ChemicalsSperex.ToV2().loadableCarTypes[0].cargoPrefabVariants;
+	public static GameObject[] flatcarExplosive = CargoType.CryoHydrogen.ToV2().loadableCarTypes[0].cargoPrefabVariants;
+	public static GameObject[] flatcarOxy = CargoType.CryoOxygen.ToV2().loadableCarTypes[0].cargoPrefabVariants;
 }
 
 static class Cars
@@ -190,9 +169,9 @@ static class Cars
 	public static List<TrainCarType_v2> fluidCars = new List<TrainCarType>
 	{
 		// FlatbedEmpty,
-		TankWhite, TankYellow, TankChrome,
-		TankBlue, TankOrange,
-		TankBlack,
+		TankWhite, // TankYellow, TankChrome, // TankOil
+		TankBlue, // TankOrange,  // TankGas
+		TankBlack, // TankChem
 	}.ConvertAll(c => c.ToV2().parentType).ToHashSet().ToList();
 
 	public static List<TrainCarType_v2> nonPerishableCars = new List<TrainCarType>

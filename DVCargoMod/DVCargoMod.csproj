@@ -11,12 +11,14 @@
 	<ItemGroup>
 		<Reference Include="Assembly-CSharp" />
 		<Reference Include="DV.ThingTypes" />
+		<Reference Include="DV.Utils" />
 	</ItemGroup>
 
 	<!-- Unity -->
 	<ItemGroup>
 		<Reference Include="UnityEngine" />
 		<Reference Include="UnityEngine.CoreModule" />
+		<Reference Include="UnityEngine.PhysicsModule" />
 	</ItemGroup>
 
 	<!-- Mod Loader -->
