@@ -88,14 +88,16 @@ class DVObjectModel_RecalculateCaches_Patch
 					tankerPrefab = LoadableInfos.tankCorrosive;
 				}
 				// Debug.Log("after tankerPrefab");
-				var tankerInfo = tankerTypes.Select(tct2 => new CargoType_v2.LoadableInfo(tct2, tankerPrefab)).ToArray();
+				var tankerInfo = tankerTypes.Select(tct2 => new CargoType_v2.LoadableInfo(tct2, tankerPrefab));
 				// Debug.Log("after tankerInfo");
-				cargo.loadableCarTypes = tankerInfo;
+				var loadables = cargo.loadableCarTypes.ToList();
+				loadables.AddRange(tankerInfo);
+				cargo.loadableCarTypes = loadables.Distinct().ToArray();
 				// Debug.Log($"finished {cargo.v1}");
 			}
 			cargoes.Add(cargo);
-			// Debug.Log(Main.PREFIX + $"{cargo.id}: [{cargo.loadableCarTypes.Select(info => info.carType.id).Join(delimiter: ",")}]");
-			// Debug.Log(Main.PREFIX + $"{cargo.id}: [{cargo.loadableCarTypes.SelectMany(info => info.carType.liveries).Select(l => l.id).Join(delimiter: ",")}]");
+			Debug.Log(Main.PREFIX + $"{cargo.id}: [{cargo.loadableCarTypes.Select(info => info.carType.id).Join(delimiter: ",")}]");
+			Debug.Log(Main.PREFIX + $"{cargo.id}: [{cargo.loadableCarTypes.SelectMany(info => info.carType.liveries).Select(l => l.id).Join(delimiter: ",")}]");
 		}
 		__instance.cargos = cargoes;
 
@@ -120,8 +122,8 @@ static class Cargoes
 		CrudeOil, Diesel, Gasoline,
 		Methane, Alcohol,
 		Ammonia, SodiumHydroxide,
-		// TODO: Argon, Nitrogen, CryoHydrogen, CryoOxygen,
-		// TODO: ChemicalsIskar, ChemicalsSperex,
+		Argon, Nitrogen, CryoHydrogen, CryoOxygen,
+		ChemicalsIskar, ChemicalsSperex,
 	};
 
 	public static List<CargoType> nonPerishableCargoes = new List<CargoType>
@@ -134,7 +136,6 @@ static class Cargoes
 		Bread, CatFood, CannedFood, DairyProducts, MeatProducts,
 		Medicine,
 	};
-
 
 	public static List<CargoType> perishableCargoes = new List<CargoType>
 	{
@@ -149,8 +150,6 @@ static class Cargoes
 		Logs,
 		ScrapMetal
 	};
-
-
 }
 static class LoadableInfos
 {
