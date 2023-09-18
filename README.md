@@ -17,9 +17,27 @@ Cars: Tankers, Flatcars
 * Cryo Hydrogen (F)
 * [Iskar/Sperex] Chemicals (F)
 
+| Cargo           | Prefabs                                |
+| --------------- | -------------------------------------- |
+| Alcohol         | C_Tank_Explosive                       |
+| Ammonia         | C_Tank_ToxicCorrosive                  |
+| Argon           | C_Flatcar_ISOTankYellowAsphyxiating_x2 |
+| ChemicalsIskar  |                                        |
+| ChemicalsIskar  | C_Flatcar_ContainerIskar               |
+| ChemicalsSperex |                                        |
+| ChemicalsSperex | C_Flatcar_ContainerSperex              |
+| CrudeOil        | C_Tank_Flammable                       |
+| CryoHydrogen    | C_Flatcar_ISOTankYellowExplosive_x2    |
+| CryoOxygen      | C_Flatcar_ISOTankYellowOxydizing_x2    |
+| Diesel          | C_Tank_Flammable                       |
+| Gasoline        | C_Tank_Explosive                       |
+| Methane         | C_Tank_Explosive                       |
+| Nitrogen        | C_Flatcar_ISOTankYellowAsphyxiating_x2 |
+| SodiumHydroxide | C_Tank_Corrosive                       |
+
 ## Non-Perishables
 
-Cars: Flatcars, Boxcars, Reefers, Gondolas
+Cars: Flatcars, Boxcars, Gondolas
 
 * [AAG/Iskar/Krugmann/Novae/Traeg] Electronics (F)
 * [AAG/Iskar/Krugmann/Novae/Traeg] Tooling (FB)
