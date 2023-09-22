@@ -1,582 +1,894 @@
-{
-    "Coal": [
-        {
-            "Hopper": [
-                "C_Hopper_Coal"
-            ]
-        }
-    ],
-    "IronOre": [
-        {
-            "Hopper": [
-                "C_Hopper_IronOre"
-            ]
-        }
-    ],
-    "CrudeOil": [
-        {
-            "TankOil": [
-                "C_Tank_Flammable"
-            ]
-        }
-    ],
-    "Diesel": [
-        {
-            "TankOil": [
-                "C_Tank_Flammable"
-            ]
-        }
-    ],
-    "Gasoline": [
-        {
-            "TankOil": [
-                "C_Tank_Explosive"
-            ]
-        }
-    ],
-    "Methane": [
-        {
-            "TankGas": [
-                "C_Tank_Explosive"
-            ]
-        }
-    ],
-    "Logs": [
-        {
-            "FlatbedStakes": [
-                "C_FlatcarStakes_Logs"
-            ]
-        }
-    ],
-    "Boards": [
-        {
-            "Flatbed": [
-                "C_Flatcar_WoodBoardsL"
-            ]
-        }
-    ],
-    "Plywood": [
-        {
-            "Flatbed": [
-                "C_Flatcar_WoodPlywood"
-            ]
-        }
-    ],
-    "Wheat": [
-        {
-            "Hopper": [
-                "C_Hopper_Wheat"
-            ]
-        }
-    ],
-    "Corn": [
-        {
-            "Hopper": [
-                "C_Hopper_Corn"
-            ]
-        }
-    ],
-    "Pigs": [
-        {
-            "Boxcar": []
-        }
-    ],
-    "Cows": [
-        {
-            "Boxcar": []
-        }
-    ],
-    "Chickens": [
-        {
-            "Boxcar": []
-        }
-    ],
-    "Sheep": [
-        {
-            "Boxcar": []
-        }
-    ],
-    "Goats": [
-        {
-            "Boxcar": []
-        }
-    ],
-    "Bread": [
-        {
-            "Boxcar": []
-        }
-    ],
-    "DairyProducts": [
-        {
-            "Refrigerator": []
-        },
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerSunOmniAC",
-                "C_Flatcar_ContainerWhiteAC"
-            ]
-        }
-    ],
-    "MeatProducts": [
-        {
-            "Refrigerator": []
-        },
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerSunOmniAC",
-                "C_Flatcar_ContainerWhiteAC"
-            ]
-        }
-    ],
-    "CannedFood": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerSunOmni",
-                "C_Flatcar_ContainerWhite"
-            ]
-        }
-    ],
-    "CatFood": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerSunOmni",
-                "C_Flatcar_ContainerWhite"
-            ]
-        },
-        {
-            "Boxcar": []
-        }
-    ],
-    "SteelRolls": [
-        {
-            "Flatbed": [
-                "C_Flatcar_SteelRolls"
-            ]
-        }
-    ],
-    "SteelBillets": [
-        {
-            "Flatbed": [
-                "C_Flatcar_SteelBillets1"
-            ]
-        }
-    ],
-    "SteelSlabs": [
-        {
-            "Flatbed": [
-                "C_Flatcar_SteelSheets"
-            ]
-        }
-    ],
-    "SteelBentPlates": [
-        {
-            "Flatbed": [
-                "C_Flatcar_SteelBentPlates"
-            ]
-        }
-    ],
-    "SteelRails": [
-        {
-            "Flatbed": [
-                "C_Flatcar_SteelRails"
-            ]
-        }
-    ],
-    "ScrapMetal": [
-        {
-            "Gondola": [
-                "C_Gondola_ScrapMetal"
-            ]
-        }
-    ],
-    "ElectronicsIskar": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerIskar"
-            ]
-        }
-    ],
-    "ElectronicsKrugmann": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerKrugmann"
-            ]
-        }
-    ],
-    "ElectronicsAAG": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerAAG",
-                "C_Flatcar_ContainerWhite"
-            ]
-        }
-    ],
-    "ElectronicsNovae": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerNovae",
-                "C_Flatcar_ContainerNovaeOld"
-            ]
-        }
-    ],
-    "ElectronicsTraeg": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerTraeg",
-                "C_Flatcar_ContainerRed"
-            ]
-        }
-    ],
-    "ToolsIskar": [
-        {
-            "Boxcar": []
-        },
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerIskar"
-            ]
-        }
-    ],
-    "ToolsBrohm": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerBrohm",
-                "C_Flatcar_ContainerRed"
-            ]
-        }
-    ],
-    "ToolsAAG": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerAAG",
-                "C_Flatcar_ContainerWhite"
-            ]
-        }
-    ],
-    "ToolsNovae": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerNovae",
-                "C_Flatcar_ContainerNovaeOld"
-            ]
-        }
-    ],
-    "ToolsTraeg": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerTraeg",
-                "C_Flatcar_ContainerRed"
-            ]
-        }
-    ],
-    "Furniture": [
-        {
-            "Boxcar": []
-        },
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerGoorsk"
-            ]
-        }
-    ],
-    "Pipes": [
-        {
-            "FlatbedStakes": [
-                "C_FlatcarStakes_Pipes1",
-                "C_FlatcarStakes_Pipes2",
-                "C_FlatcarStakes_Pipes3",
-                "C_FlatcarStakes_Pipes4",
-                "C_FlatcarStakes_Pipes5"
-            ]
-        }
-    ],
-    "ClothingObco": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerObco"
-            ]
-        }
-    ],
-    "ClothingNeoGamma": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerNeoGamma"
-            ]
-        }
-    ],
-    "ClothingNovae": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerNovae",
-                "C_Flatcar_ContainerNovaeOld"
-            ]
-        }
-    ],
-    "ClothingTraeg": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerTraeg",
-                "C_Flatcar_ContainerRed"
-            ]
-        }
-    ],
-    "Medicine": [
-        {
-            "Refrigerator": []
-        },
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerChemlekAC",
-                "C_Flatcar_ContainerWhiteAC"
-            ]
-        }
-    ],
-    "ChemicalsIskar": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerIskar"
-            ]
-        },
-        {
-            "Boxcar": []
-        }
-    ],
-    "ChemicalsSperex": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerSperex"
-            ]
-        },
-        {
-            "Boxcar": []
-        }
-    ],
-    "NewCars": [
-        {
-            "Autorack": [
-                "C_Autorack_CarsLocal1",
-                "C_Autorack_CarsLocal2",
-                "C_Autorack_CarsLocal3",
-                "C_Autorack_CarsLocal4"
-            ]
-        }
-    ],
-    "ImportedNewCars": [
-        {
-            "Autorack": [
-                "C_Autorack_CarsImported1",
-                "C_Autorack_CarsImported2",
-                "C_Autorack_CarsImported3",
-                "C_Autorack_CarsImported4"
-            ]
-        }
-    ],
-    "Tractors": [
-        {
-            "Flatbed": [
-                "C_Flatcar_FarmTractors"
-            ]
-        }
-    ],
-    "Excavators": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ExcavatorNew"
-            ]
-        }
-    ],
-    "Alcohol": [
-        {
-            "TankGas": [
-                "C_Tank_Explosive"
-            ]
-        }
-    ],
-    "Acetylene": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerAcetyleneMedium_x2"
-            ]
-        }
-    ],
-    "CryoOxygen": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ISOTankYellowOxydizing_x2"
-            ]
-        }
-    ],
-    "CryoHydrogen": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ISOTankYellowExplosive_x2"
-            ]
-        }
-    ],
-    "Argon": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ISOTankYellowAsphyxiating_x2"
-            ]
-        }
-    ],
-    "Nitrogen": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ISOTankYellowAsphyxiating_x2"
-            ]
-        }
-    ],
-    "Ammonia": [
-        {
-            "TankChem": [
-                "C_Tank_ToxicCorrosive"
-            ]
-        }
-    ],
-    "SodiumHydroxide": [
-        {
-            "TankChem": [
-                "C_Tank_Corrosive"
-            ]
-        }
-    ],
-    "SpentNuclearFuel": [
-        {
-            "NuclearFlask": [
-                "C_NuclearFlask_Container"
-            ]
-        }
-    ],
-    "Ammunition": [
-        {
-            "BoxcarMilitary": [
-                "C_BoxcarMilitary_Explosive"
-            ]
-        }
-    ],
-    "Biohazard": [
-        {
-            "FlatbedMilitary": [
-                "C_Flatcar_ContainerMilitarySmall_x3"
-            ]
-        }
-    ],
-    "Tanks": [
-        {
-            "FlatbedMilitary": [
-                "C_Flatcar_TankMilitary"
-            ]
-        }
-    ],
-    "MilitaryTrucks": [
-        {
-            "FlatbedMilitary": [
-                "C_Flatcar_TruckMilitary"
-            ]
-        }
-    ],
-    "MilitarySupplies": [
-        {
-            "FlatbedMilitary": [
-                "C_Flatcar_ContainerMilitary",
-                "C_Flatcar_ContainerMilitaryHabitat",
-                "C_Flatcar_ContainerMilitaryHabitatMedium",
-                "C_Flatcar_ContainerMilitaryHabitatMedium_x2",
-                "C_Flatcar_ContainerMilitaryMedium",
-                "C_Flatcar_ContainerMilitaryMedium_x2"
-            ]
-        }
-    ],
-    "EmptySunOmni": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerSunOmni",
-                "C_Flatcar_ContainerSunOmniAC",
-                "C_Flatcar_ContainerWhite",
-                "C_Flatcar_ContainerWhiteAC"
-            ]
-        }
-    ],
-    "EmptyIskar": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerIskar"
-            ]
-        }
-    ],
-    "EmptyObco": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerObco"
-            ]
-        }
-    ],
-    "EmptyGoorsk": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerGoorsk"
-            ]
-        }
-    ],
-    "EmptyKrugmann": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerKrugmann"
-            ]
-        }
-    ],
-    "EmptyBrohm": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerBrohm",
-                "C_Flatcar_ContainerRed"
-            ]
-        }
-    ],
-    "EmptyAAG": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerAAG",
-                "C_Flatcar_ContainerWhite"
-            ]
-        }
-    ],
-    "EmptySperex": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerSperex"
-            ]
-        }
-    ],
-    "EmptyNovae": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerNovae",
-                "C_Flatcar_ContainerNovaeOld"
-            ]
-        }
-    ],
-    "EmptyTraeg": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerTraeg",
-                "C_Flatcar_ContainerRed"
-            ]
-        }
-    ],
-    "EmptyChemlek": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerChemlekAC"
-            ]
-        }
-    ],
-    "EmptyNeoGamma": [
-        {
-            "Flatbed": [
-                "C_Flatcar_ContainerNeoGamma"
-            ]
-        }
-    ]
-}
+[
+    {
+        "cargo": "Coal",
+        "carTypes": [
+            {
+                "carType": "Hopper",
+                "prefabs": [
+                    "C_Hopper_Coal"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "IronOre",
+        "carTypes": [
+            {
+                "carType": "Hopper",
+                "prefabs": [
+                    "C_Hopper_IronOre"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "CrudeOil",
+        "carTypes": [
+            {
+                "carType": "TankOil",
+                "prefabs": [
+                    "C_Tank_Flammable"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Diesel",
+        "carTypes": [
+            {
+                "carType": "TankOil",
+                "prefabs": [
+                    "C_Tank_Flammable"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Gasoline",
+        "carTypes": [
+            {
+                "carType": "TankOil",
+                "prefabs": [
+                    "C_Tank_Explosive"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Methane",
+        "carTypes": [
+            {
+                "carType": "TankGas",
+                "prefabs": [
+                    "C_Tank_Explosive"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Logs",
+        "carTypes": [
+            {
+                "carType": "FlatbedStakes",
+                "prefabs": [
+                    "C_FlatcarStakes_Logs"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Boards",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_WoodBoardsL"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Plywood",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_WoodPlywood"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Wheat",
+        "carTypes": [
+            {
+                "carType": "Hopper",
+                "prefabs": [
+                    "C_Hopper_Wheat"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Corn",
+        "carTypes": [
+            {
+                "carType": "Hopper",
+                "prefabs": [
+                    "C_Hopper_Corn"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Pigs",
+        "carTypes": [
+            {
+                "carType": "Boxcar",
+                "prefabs": []
+            }
+        ]
+    },
+    {
+        "cargo": "Cows",
+        "carTypes": [
+            {
+                "carType": "Boxcar",
+                "prefabs": []
+            }
+        ]
+    },
+    {
+        "cargo": "Chickens",
+        "carTypes": [
+            {
+                "carType": "Boxcar",
+                "prefabs": []
+            }
+        ]
+    },
+    {
+        "cargo": "Sheep",
+        "carTypes": [
+            {
+                "carType": "Boxcar",
+                "prefabs": []
+            }
+        ]
+    },
+    {
+        "cargo": "Goats",
+        "carTypes": [
+            {
+                "carType": "Boxcar",
+                "prefabs": []
+            }
+        ]
+    },
+    {
+        "cargo": "Bread",
+        "carTypes": [
+            {
+                "carType": "Boxcar",
+                "prefabs": []
+            }
+        ]
+    },
+    {
+        "cargo": "DairyProducts",
+        "carTypes": [
+            {
+                "carType": "Refrigerator",
+                "prefabs": []
+            },
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerSunOmniAC",
+                    "C_Flatcar_ContainerWhiteAC"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "MeatProducts",
+        "carTypes": [
+            {
+                "carType": "Refrigerator",
+                "prefabs": []
+            },
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerSunOmniAC",
+                    "C_Flatcar_ContainerWhiteAC"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "CannedFood",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerSunOmni",
+                    "C_Flatcar_ContainerWhite"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "CatFood",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerSunOmni",
+                    "C_Flatcar_ContainerWhite"
+                ]
+            },
+            {
+                "carType": "Boxcar",
+                "prefabs": []
+            }
+        ]
+    },
+    {
+        "cargo": "SteelRolls",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_SteelRolls"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "SteelBillets",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_SteelBillets1"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "SteelSlabs",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_SteelSheets"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "SteelBentPlates",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_SteelBentPlates"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "SteelRails",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_SteelRails"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ScrapMetal",
+        "carTypes": [
+            {
+                "carType": "Gondola",
+                "prefabs": [
+                    "C_Gondola_ScrapMetal"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ElectronicsIskar",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerIskar"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ElectronicsKrugmann",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerKrugmann"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ElectronicsAAG",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerAAG",
+                    "C_Flatcar_ContainerWhite"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ElectronicsNovae",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerNovae",
+                    "C_Flatcar_ContainerNovaeOld"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ElectronicsTraeg",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerTraeg",
+                    "C_Flatcar_ContainerRed"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ToolsIskar",
+        "carTypes": [
+            {
+                "carType": "Boxcar",
+                "prefabs": []
+            },
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerIskar"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ToolsBrohm",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerBrohm",
+                    "C_Flatcar_ContainerRed"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ToolsAAG",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerAAG",
+                    "C_Flatcar_ContainerWhite"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ToolsNovae",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerNovae",
+                    "C_Flatcar_ContainerNovaeOld"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ToolsTraeg",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerTraeg",
+                    "C_Flatcar_ContainerRed"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Furniture",
+        "carTypes": [
+            {
+                "carType": "Boxcar",
+                "prefabs": []
+            },
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerGoorsk"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Pipes",
+        "carTypes": [
+            {
+                "carType": "FlatbedStakes",
+                "prefabs": [
+                    "C_FlatcarStakes_Pipes1",
+                    "C_FlatcarStakes_Pipes2",
+                    "C_FlatcarStakes_Pipes3",
+                    "C_FlatcarStakes_Pipes4",
+                    "C_FlatcarStakes_Pipes5"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ClothingObco",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerObco"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ClothingNeoGamma",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerNeoGamma"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ClothingNovae",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerNovae",
+                    "C_Flatcar_ContainerNovaeOld"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ClothingTraeg",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerTraeg",
+                    "C_Flatcar_ContainerRed"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Medicine",
+        "carTypes": [
+            {
+                "carType": "Refrigerator",
+                "prefabs": []
+            },
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerChemlekAC",
+                    "C_Flatcar_ContainerWhiteAC"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ChemicalsIskar",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerIskar"
+                ]
+            },
+            {
+                "carType": "Boxcar",
+                "prefabs": []
+            }
+        ]
+    },
+    {
+        "cargo": "ChemicalsSperex",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerSperex"
+                ]
+            },
+            {
+                "carType": "Boxcar",
+                "prefabs": []
+            }
+        ]
+    },
+    {
+        "cargo": "NewCars",
+        "carTypes": [
+            {
+                "carType": "Autorack",
+                "prefabs": [
+                    "C_Autorack_CarsLocal1",
+                    "C_Autorack_CarsLocal2",
+                    "C_Autorack_CarsLocal3",
+                    "C_Autorack_CarsLocal4"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "ImportedNewCars",
+        "carTypes": [
+            {
+                "carType": "Autorack",
+                "prefabs": [
+                    "C_Autorack_CarsImported1",
+                    "C_Autorack_CarsImported2",
+                    "C_Autorack_CarsImported3",
+                    "C_Autorack_CarsImported4"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Tractors",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_FarmTractors"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Excavators",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ExcavatorNew"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Alcohol",
+        "carTypes": [
+            {
+                "carType": "TankGas",
+                "prefabs": [
+                    "C_Tank_Explosive"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Acetylene",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerAcetyleneMedium_x2"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "CryoOxygen",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ISOTankYellowOxydizing_x2"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "CryoHydrogen",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ISOTankYellowExplosive_x2"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Argon",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ISOTankYellowAsphyxiating_x2"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Nitrogen",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ISOTankYellowAsphyxiating_x2"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Ammonia",
+        "carTypes": [
+            {
+                "carType": "TankChem",
+                "prefabs": [
+                    "C_Tank_ToxicCorrosive"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "SodiumHydroxide",
+        "carTypes": [
+            {
+                "carType": "TankChem",
+                "prefabs": [
+                    "C_Tank_Corrosive"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "SpentNuclearFuel",
+        "carTypes": [
+            {
+                "carType": "NuclearFlask",
+                "prefabs": [
+                    "C_NuclearFlask_Container"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Ammunition",
+        "carTypes": [
+            {
+                "carType": "BoxcarMilitary",
+                "prefabs": [
+                    "C_BoxcarMilitary_Explosive"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Biohazard",
+        "carTypes": [
+            {
+                "carType": "FlatbedMilitary",
+                "prefabs": [
+                    "C_Flatcar_ContainerMilitarySmall_x3"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "Tanks",
+        "carTypes": [
+            {
+                "carType": "FlatbedMilitary",
+                "prefabs": [
+                    "C_Flatcar_TankMilitary"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "MilitaryTrucks",
+        "carTypes": [
+            {
+                "carType": "FlatbedMilitary",
+                "prefabs": [
+                    "C_Flatcar_TruckMilitary"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "MilitarySupplies",
+        "carTypes": [
+            {
+                "carType": "FlatbedMilitary",
+                "prefabs": [
+                    "C_Flatcar_ContainerMilitary",
+                    "C_Flatcar_ContainerMilitaryHabitat",
+                    "C_Flatcar_ContainerMilitaryHabitatMedium",
+                    "C_Flatcar_ContainerMilitaryHabitatMedium_x2",
+                    "C_Flatcar_ContainerMilitaryMedium",
+                    "C_Flatcar_ContainerMilitaryMedium_x2"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "EmptySunOmni",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerSunOmni",
+                    "C_Flatcar_ContainerSunOmniAC",
+                    "C_Flatcar_ContainerWhite",
+                    "C_Flatcar_ContainerWhiteAC"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "EmptyIskar",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerIskar"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "EmptyObco",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerObco"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "EmptyGoorsk",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerGoorsk"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "EmptyKrugmann",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerKrugmann"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "EmptyBrohm",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerBrohm",
+                    "C_Flatcar_ContainerRed"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "EmptyAAG",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerAAG",
+                    "C_Flatcar_ContainerWhite"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "EmptySperex",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerSperex"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "EmptyNovae",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerNovae",
+                    "C_Flatcar_ContainerNovaeOld"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "EmptyTraeg",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerTraeg",
+                    "C_Flatcar_ContainerRed"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "EmptyChemlek",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerChemlekAC"
+                ]
+            }
+        ]
+    },
+    {
+        "cargo": "EmptyNeoGamma",
+        "carTypes": [
+            {
+                "carType": "Flatbed",
+                "prefabs": [
+                    "C_Flatcar_ContainerNeoGamma"
+                ]
+            }
+        ]
+    }
+]
