@@ -7,7 +7,10 @@ using DV.ThingTypes;
 using DV.ThingTypes.TransitionHelpers;
 
 using HarmonyLib;
+using UnityEngine;
 using UnityModManagerNet;
+
+using TCCDP = TrainCarAndCargoDamageProperties;
 
 namespace DvCargoMod;
 
@@ -149,10 +152,20 @@ class DVObjectModel_RecalculateCaches_Patch
 				Main.DebugLog(LoggingLevel.Verbose, () => $"Adding tankers to {cargo.v1}");
 				var tankerLiveries = Cars.tankers;
 				var tankerTypes = instance.carTypes.Where(carType => carType.liveries.Any(l => tankerLiveries.Contains(l.v1)));
-				var tankerType = TrainCarAndCargoDamageProperties.IsCargoFlammable(cargo.v1) ? TCT.TankOil
-					: TrainCarAndCargoDamageProperties.IsCargoExplosive(cargo.v1) ? TCT.TankChem
-					: TrainCarAndCargoDamageProperties.IsCargoCorrosiveLiquid(cargo.v1) ? TCT.TankChem : TCT.TankOil;
-				var tankerPrefab = cargo.GetCargoPrefabsForCarType(tankerType);
+
+				var tankerPrefab = new GameObject[] { };
+				if (TCCDP.IsCargoFlammable(cargo.v1))
+				{
+					tankerPrefab = cargo.GetCargoPrefabsForCarType(TCT.TankOil);
+				}
+				else if (TCCDP.IsCargoExplosive(cargo.v1))
+				{
+					tankerPrefab = cargo.GetCargoPrefabsForCarType(TCT.TankGas);
+				}
+				else if (TCCDP.IsCargoCorrosiveLiquid(cargo.v1))
+				{
+					tankerPrefab = cargo.GetCargoPrefabsForCarType(TCT.TankChem);
+				}
 				var tankerInfo = tankerTypes.Select(t => new CargoType_v2.LoadableInfo(t, tankerPrefab));
 				var loadables = cargo.loadableCarTypes.ToList();
 				loadables.AddRange(tankerInfo);
@@ -163,7 +176,7 @@ class DVObjectModel_RecalculateCaches_Patch
 				Main.DebugLog(LoggingLevel.Verbose, () => $"Adding boxcars to {cargo.v1}");
 				var boxcarLiveries = Cars.boxcars;
 				var boxcarTypes = instance.carTypes.Where(carType => carType.liveries.Any(l => boxcarLiveries.Contains(l.v1)));
-				var boxcarPrefab = cargo.GetCargoPrefabsForCarType(Cars.boxcars[0].ToV2().parentType);
+				var boxcarPrefab = cargo.GetCargoPrefabsForCarType(TCT.Boxcar);
 				var boxcarInfo = boxcarTypes.Select(t => new CargoType_v2.LoadableInfo(t, boxcarPrefab));
 
 				// var flatcarLiveries = Cars.flatcars;

@@ -120,12 +120,12 @@ class TCT
 
 static class LoadableInfos
 {
-    public static GameObject[] TankFlammable { get; } = CargoType.CrudeOil.ToV2().GetCargoPrefabsForCarType(TCT.TankOil);
-    public static GameObject[] TankExplosive { get; } = CargoType.Gasoline.ToV2().GetCargoPrefabsForCarType(TCT.TankGas);
-    public static GameObject[] TankCorrosive { get; } = CargoType.Ammonia.ToV2().GetCargoPrefabsForCarType(TCT.TankChem);
-    public static GameObject[] FlatcarAsph { get; } = CargoType.Argon.ToV2().GetCargoPrefabsForCarType(TCT.Flatbed);
-    public static GameObject[] FlatcarExplosive { get; } = CargoType.CryoHydrogen.ToV2().GetCargoPrefabsForCarType(TCT.Flatbed);
-    public static GameObject[] FlatcarOxy { get; } = CargoType.CryoOxygen.ToV2().GetCargoPrefabsForCarType(TCT.Flatbed);
-    public static GameObject[] GondolaScrap { get; } = CargoType.ScrapMetal.ToV2().GetCargoPrefabsForCarType(TCT.Gondola);
+    public static GameObject[] TankFlammable { get; } = CrudeOil.ToV2().GetCargoPrefabsForCarType(TCT.TankOil);
+    public static GameObject[] TankExplosive { get; } = Gasoline.ToV2().GetCargoPrefabsForCarType(TCT.TankGas);
+    public static GameObject[] TankCorrosive { get; } = Ammonia.ToV2().GetCargoPrefabsForCarType(TCT.TankChem);
+    public static GameObject[] FlatcarAsph { get; } = Argon.ToV2().GetCargoPrefabsForCarType(TCT.Flatbed);
+    public static GameObject[] FlatcarExplosive { get; } = CryoHydrogen.ToV2().GetCargoPrefabsForCarType(TCT.Flatbed);
+    public static GameObject[] FlatcarOxy { get; } = CryoOxygen.ToV2().GetCargoPrefabsForCarType(TCT.Flatbed);
+    public static GameObject[] GondolaScrap { get; } = ScrapMetal.ToV2().GetCargoPrefabsForCarType(TCT.Gondola);
 }
 #endregion
