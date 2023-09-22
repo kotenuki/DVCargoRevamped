@@ -1,13 +1,14 @@
+using System;
 using UnityModManagerNet;
 
 namespace DvCargoMod;
 
 public enum LoggingLevel
 {
-    None,
-    Minimal,
-    Verbose,
-    Debug,
+    None = 0,
+    Minimal = 1,
+    Verbose = 2,
+    Debug = 3,
 }
 
 public class Settings : UnityModManager.ModSettings, IDrawable

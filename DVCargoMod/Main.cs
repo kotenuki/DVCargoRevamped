@@ -59,8 +59,7 @@ public static class Main
 	}
 	public static void DebugLog(LoggingLevel level, Func<string> message)
 	{
-		// log setting level is not None if higher than None, and the given level is equal or higher than the setting level
-		if (settings.loggingLevel != LoggingLevel.None && level >= settings.loggingLevel)
+		if (settings.loggingLevel != LoggingLevel.None && level <= settings.loggingLevel)
 		{
 			mod?.Logger.Log(message());
 		}
@@ -69,7 +68,7 @@ public static class Main
 
 #region Patches
 [HarmonyPatch(typeof(DVObjectModel), nameof(DVObjectModel.RecalculateCaches))]
-[HarmonyPatch(Priority.Last)]
+[HarmonyPriority(Priority.First)]
 class DVObjectModel_RecalculateCaches_Patch
 {
 	static void Postfix(
@@ -78,7 +77,7 @@ class DVObjectModel_RecalculateCaches_Patch
 		ref Dictionary<CargoType_v2, List<TrainCarType_v2>> ____cargoToLoadableCarTypes
 	)
 	{
-		Main.DebugLog(() => "Recalculating caches...");
+		Main.DebugLog(() => "Recalculating caches");
 		// link liveries to traincartypes
 		UpdateTrainCars(ref __instance);
 
@@ -86,29 +85,23 @@ class DVObjectModel_RecalculateCaches_Patch
 		UpdateCargos(ref __instance);
 
 		// recalculate dicts
-		Main.DebugLog(() => "Recalculating _carTypeToLoadableCargo and _cargoToLoadableCarTypes dictionaries...");
+		Main.DebugLog(() => "Reloading mappings");
 		var cargos = __instance.cargos;
-		____carTypeToLoadableCargo = __instance.carTypes.ToDictionary(
-			(TrainCarType_v2 c) => c,
-			(TrainCarType_v2 c) => cargos.Where(
-				(CargoType_v2 cg) => cg.loadableCarTypes.Any(
-					(CargoType_v2.LoadableInfo lct) => lct.carType == c)).ToList());
-		____cargoToLoadableCarTypes = cargos.ToDictionary(
-			(CargoType_v2 c) => c,
-			(CargoType_v2 c) => c.loadableCarTypes.Select(
-				(CargoType_v2.LoadableInfo lct) => lct.carType).ToList());
-		Main.DebugLog(() => "Finished recalculating _carTypeToLoadableCargo and _cargoToLoadableCarTypes dictionaries");
+		var carTypes = __instance.carTypes;
+
+		Main.DebugLog(LoggingLevel.Verbose, () => "Reloading _carTypeToLoadableCargo");
+		____carTypeToLoadableCargo = __instance.carTypes.ToDictionary(c => c, c => cargos.Where(cg => cg.loadableCarTypes.Any(lct => lct.carType == c)).ToList());
+		Main.DebugLog(LoggingLevel.Verbose, () => "Reloading _cargoToLoadableCarTypes");
+		____cargoToLoadableCarTypes = cargos.ToDictionary(c => c, c => c.loadableCarTypes.Select(lct => lct.carType).ToList());
+		Main.DebugLog(() => "Finished reloading mappings");
 
 		if (Main.settings.loggingLevel > LoggingLevel.None)
 		{
 			foreach (var cargo in cargos)
 			{
-				Main.DebugLog(LoggingLevel.Debug, () => $"{cargo.id} carTypes: [{cargo.loadableCarTypes.Select(info => info.carType.id).Join(delimiter: ",")}]");
-				Main.DebugLog(LoggingLevel.Debug, () => $"{cargo.id} liveries: [{cargo.loadableCarTypes.SelectMany(info => info.carType.liveries).Select(l => l.id).Distinct().Join(delimiter: ",")}]");
-				// var prefabInfo = cargo.loadableCarTypes
-				// 	.Select(info => $"{{\"{info.carType.id}\": [{info.cargoPrefabVariants.Select(prefab => $"\"{prefab.name}\"").Join()}]}}")
-				// 	.Join();
-				// Debug.Log(Main.PREFIX + $"\"{cargo.id}\": [{prefabInfo}],");
+				Main.DebugLog(LoggingLevel.Debug, () => $"{cargo.id} carTypes: [{cargo.loadableCarTypes.Select(info => info.carType.id).Join()}]");
+				Main.DebugLog(LoggingLevel.Debug, () => $"{cargo.id} liveries: [{cargo.loadableCarTypes.SelectMany(info => info.carType.liveries).Select(l => l.id).Distinct().Join()}]");
+				Main.DebugLog(LoggingLevel.Debug, () => $"{cargo.id} prefabs:  [{carTypes.SelectMany(ct => { var gos = cargo.GetCargoPrefabsForCarType(ct); return gos == null ? new List<GameObject>() : gos.ToList(); }).Select(go => go.name).Join()}]");
 			}
 		}
 		Main.DebugLog(() => "Caches recalculated");
@@ -116,24 +109,24 @@ class DVObjectModel_RecalculateCaches_Patch
 
 	private static void UpdateTrainCars(ref DVObjectModel instance)
 	{
-		Main.DebugLog(() => "Adding TrainCarLiveries to TrainCarTypes...");
+		Main.DebugLog(() => "Adding TrainCarLiveries to TrainCarTypes");
 		var carTypes = new List<TrainCarType_v2>();
 		foreach (var carType in instance.carTypes)
 		{
 			if (carType.id.Contains("Tank"))
 			{
-				Main.DebugLog(LoggingLevel.Verbose, () => $"Adding tankers to {carType.id}...");
+				Main.DebugLog(LoggingLevel.Verbose, () => $"Adding tankers to {carType.id}");
 				carType.liveries.AddRange(Cars.tankers.ConvertAll(t => t.ToV2()));
 			}
 			else if (!carType.id.Contains("Military") && carType.id.Contains("Boxcar") || carType.id.Contains("Refrigerator"))
 			{
-				Main.DebugLog(LoggingLevel.Verbose, () => $"Adding boxcars to {carType.id}...");
+				Main.DebugLog(LoggingLevel.Verbose, () => $"Adding boxcars to {carType.id}");
 				carType.liveries.AddRange(Cars.boxcars.ConvertAll(t => t.ToV2()));
 			}
-			// else if (!carType.id.Contains("Military") && carType.id.Contains("Flatbed"))
-			// {
-			// 	carType.liveries.AddRange(Cars.boxcars.ConvertAll(t => t.ToV2()));
-			// }
+			else if (!carType.id.Contains("Military") && carType.id == "Flatbed")
+			{
+				carType.liveries.AddRange(Cars.boxcars.ConvertAll(t => t.ToV2()));
+			}
 			carType.liveries = carType.liveries.Distinct().ToList();
 			carTypes.Add(carType);
 		}
@@ -143,10 +136,11 @@ class DVObjectModel_RecalculateCaches_Patch
 
 	private static void UpdateCargos(ref DVObjectModel instance)
 	{
-		Main.DebugLog(() => "Adding LoadableInfos to CargoType_v2s...");
+		Main.DebugLog(() => "Adding LoadableInfos to CargoType_v2s");
 		var cargos = new List<CargoType_v2>();
 		foreach (var cargo in instance.cargos)
 		{
+			// add fluids and gasses to tank carks
 			if (Cargos.tankCarCargos.Contains(cargo.v1))
 			{
 				Main.DebugLog(LoggingLevel.Verbose, () => $"Adding tankers to {cargo.v1}");
@@ -157,6 +151,7 @@ class DVObjectModel_RecalculateCaches_Patch
 				if (TCCDP.IsCargoFlammable(cargo.v1))
 				{
 					tankerPrefab = cargo.GetCargoPrefabsForCarType(TCT.TankOil);
+					tankerPrefab = LoadableInfos.Tankers.TankFlammable;
 				}
 				else if (TCCDP.IsCargoExplosive(cargo.v1))
 				{
@@ -169,8 +164,11 @@ class DVObjectModel_RecalculateCaches_Patch
 				var tankerInfo = tankerTypes.Select(t => new CargoType_v2.LoadableInfo(t, tankerPrefab));
 				var loadables = cargo.loadableCarTypes.ToList();
 				loadables.AddRange(tankerInfo);
+
 				cargo.loadableCarTypes = loadables.Distinct().ToArray();
 			}
+
+			// add (certain) flatcar cargoes to boxcars
 			if (Cargos.boxcarCargoes.Contains(cargo.v1))
 			{
 				Main.DebugLog(LoggingLevel.Verbose, () => $"Adding boxcars to {cargo.v1}");
@@ -179,14 +177,29 @@ class DVObjectModel_RecalculateCaches_Patch
 				var boxcarPrefab = cargo.GetCargoPrefabsForCarType(TCT.Boxcar);
 				var boxcarInfo = boxcarTypes.Select(t => new CargoType_v2.LoadableInfo(t, boxcarPrefab));
 
-				// var flatcarLiveries = Cars.flatcars;
-				// var flatcarTypes = instance.carTypes.Where(carType => carType.liveries.Any(l => flatcarLiveries.Contains(l.v1)));
-				// var flatcarPrefab = cargo.GetCargoPrefabsForCarType(Cars.flatcars[0].ToV2().parentType);
-				// var flatcarInfo = flatcarTypes.Select(t => new CargoType_v2.LoadableInfo(t, flatcarPrefab));
-
 				var loadables = cargo.loadableCarTypes.ToList();
 				loadables.AddRange(boxcarInfo);
-				// loadables.AddRange(flatcarInfo);
+				cargo.loadableCarTypes = loadables.Distinct().ToArray();
+			}
+
+			// add some containerizable cargoes to flat cars in containers
+			if (Cargos.containerizableCargos.Contains(cargo.v1))
+			{
+				Main.DebugLog(LoggingLevel.Verbose, () => $"Adding flatcars to containerizable cargo {cargo.v1}");
+				var flatcarLiveries = Cars.flatcars;
+				var flatcarTypes = instance.carTypes.Where(carType => carType.liveries.Any(l => flatcarLiveries.Contains(l.v1)));
+				var flatcarPrefab = LoadableInfos.Containers.AllNormalContainers;
+				if (Cargos.containerizableCargosIsoOxydizing.Contains(cargo.v1))
+				{
+					flatcarPrefab = LoadableInfos.Containers.Hazmat.Oxydizing;
+				}
+				else if (Cargos.containerizableCargosIsoExplosive.Contains(cargo.v1))
+				{
+					flatcarPrefab = LoadableInfos.Containers.Hazmat.Explosive;
+				}
+				var flatcarInfo = flatcarTypes.Select(t => new CargoType_v2.LoadableInfo(t, flatcarPrefab));
+				var loadables = cargo.loadableCarTypes.ToList();
+				loadables.AddRange(flatcarInfo);
 				cargo.loadableCarTypes = loadables.Distinct().ToArray();
 			}
 			cargos.Add(cargo);
