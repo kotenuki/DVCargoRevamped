@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
 using DV.ThingTypes;
 using DV.ThingTypes.TransitionHelpers;
-
 using HarmonyLib;
 using UnityEngine;
 using UnityModManagerNet;
@@ -61,7 +59,7 @@ public static class Main
 	{
 		if (settings.loggingLevel != LoggingLevel.None && level <= settings.loggingLevel)
 		{
-			mod?.Logger.Log(message());
+			Debug.Log(message());
 		}
 	}
 }
