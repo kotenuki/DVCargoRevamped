@@ -15,6 +15,20 @@
           }
         }
       },
+      "Krafs.Publicizer/2.2.1": {
+        "type": "package",
+        "contentFiles": {
+          "contentfiles/cs/any/Publicizer/IgnoresAccessChecksToAttribute.cs": {
+            "buildAction": "Compile",
+            "codeLanguage": "cs",
+            "copyToOutput": false
+          }
+        },
+        "build": {
+          "build/Krafs.Publicizer.props": {},
+          "build/Krafs.Publicizer.targets": {}
+        }
+      },
       "Lib.Harmony/2.2.2": {
         "type": "package",
         "compile": {
@@ -158,6 +172,24 @@
         "lib/netstandard2.0/dnlib.dll",
         "lib/netstandard2.0/dnlib.pdb",
         "lib/netstandard2.0/dnlib.xml"
+      ]
+    },
+    "Krafs.Publicizer/2.2.1": {
+      "sha512": "QGI4nMGQbKsuFUUboixVHu4mv3lHB5RejIa7toIlzTmwLkuCYYEpUBJjmy3OpXYyj5dVSZAXVbr4oeMSloE67Q==",
+      "type": "package",
+      "path": "krafs.publicizer/2.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "build/Krafs.Publicizer.props",
+        "build/Krafs.Publicizer.targets",
+        "build/net472/Publicizer.dll",
+        "build/net472/dnlib.dll",
+        "contentfiles/cs/any/Publicizer/IgnoresAccessChecksToAttribute.cs",
+        "icon.png",
+        "krafs.publicizer.2.2.1.nupkg.sha512",
+        "krafs.publicizer.nuspec"
       ]
     },
     "Lib.Harmony/2.2.2": {
@@ -408,6 +440,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.8": [
+      "Krafs.Publicizer >= 2.2.1",
       "Microsoft.CSharp >= 4.7.0",
       "Newtonsoft.Json >= 13.0.1",
       "Nullable >= 1.3.1",
@@ -421,9 +454,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Programming\\GithubRepos\\DVCargoMod\\DvCargoMod\\DvCargoMod.csproj",
+      "projectUniqueName": "D:\\Programming\\GithubRepos\\DVCargoMod\\DvCargoMod\\DVCargoMod.csproj",
       "projectName": "DvCargoMod",
-      "projectPath": "D:\\Programming\\GithubRepos\\DVCargoMod\\DvCargoMod\\DvCargoMod.csproj",
+      "projectPath": "D:\\Programming\\GithubRepos\\DVCargoMod\\DvCargoMod\\DVCargoMod.csproj",
       "packagesPath": "C:\\Users\\bigyi\\.nuget\\packages\\",
       "outputPath": "D:\\Programming\\GithubRepos\\DVCargoMod\\DvCargoMod\\obj\\",
       "projectStyle": "PackageReference",
@@ -453,6 +486,12 @@
       "net48": {
         "targetAlias": "net48",
         "dependencies": {
+          "Krafs.Publicizer": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[2.2.1, )"
+          },
           "Microsoft.CSharp": {
             "target": "Package",
             "version": "[4.7.0, )"

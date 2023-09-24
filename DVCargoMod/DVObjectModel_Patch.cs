@@ -130,6 +130,24 @@ class DVObjectModel_RecalculateCaches_Patch
                 cargo.loadableCarTypes = loadables.Distinct().ToArray();
             }
 
+            // add stake flats to already-containerized cargoes
+            if (Cargos.containerizedCargos.Contains(cargo.v1))
+            {
+                Main.DebugLog(LoggingLevel.Verbose, () => $"Adding staked flatcars to pre-containerized cargo {cargo.v1}");
+                var flatcarLiveries = Cars.flatcars;
+                var flatcarTypes = instance.carTypes.Where(carType => carType.liveries.Any(l => flatcarLiveries.Contains(l.v1)));
+                var flatcarPrefab = cargo.GetCargoPrefabsForCarType(TCT.Flatbed);
+                if (flatcarPrefab != null)
+                {
+                    Main.DebugLog(LoggingLevel.Debug, () => $"prefabs for {cargo.v1}: [{flatcarPrefab.Select(pf => pf.name).Join()}]");
+                }
+
+                var flatcarInfo = flatcarTypes.Select(t => new CargoType_v2.LoadableInfo(t, flatcarPrefab));
+                var loadables = cargo.loadableCarTypes.ToList();
+                loadables.AddRange(flatcarInfo);
+                cargo.loadableCarTypes = loadables.Distinct().ToArray();
+            }
+
             // add some containerizable cargoes to flat cars in containers
             if (Cargos.ContainerizableCargos.Contains(cargo.v1))
             {
@@ -145,13 +163,17 @@ class DVObjectModel_RecalculateCaches_Patch
                 {
                     flatcarPrefab = LoadableInfos.Containers.Hazmat.Explosive;
                 }
-                Main.DebugLog(LoggingLevel.Debug, () => $"prefabs for {cargo.v1}: [{flatcarPrefab.Select(pf => pf.name).Join()}]");
+                if (flatcarPrefab != null)
+                {
+                    Main.DebugLog(LoggingLevel.Debug, () => $"prefabs for {cargo.v1}: [{flatcarPrefab.Select(pf => pf.name).Join()}]");
+                }
 
                 var flatcarInfo = flatcarTypes.Select(t => new CargoType_v2.LoadableInfo(t, flatcarPrefab));
                 var loadables = cargo.loadableCarTypes.ToList();
                 loadables.AddRange(flatcarInfo);
                 cargo.loadableCarTypes = loadables.Distinct().ToArray();
             }
+
             cargo.loadableCarTypes = cargo.loadableCarTypes.Distinct().ToArray();
             cargos.Add(cargo);
         }

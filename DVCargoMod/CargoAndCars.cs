@@ -26,6 +26,8 @@ static class Cargos
         Bread, CatFood, CannedFood, DairyProducts, MeatProducts, Medicine,
         Wheat, Corn,
     };
+
+    /// <summary>all cargoes in vanilla that are alreadyt in containers</summary>
     public static List<CargoType> containerizedCargos = new()
     {
         ElectronicsAAG, ElectronicsIskar, ElectronicsKrugmann, ElectronicsNovae, ElectronicsTraeg,
@@ -37,7 +39,8 @@ static class Cargos
         EmptySunOmni, EmptyIskar, EmptyObco, EmptyGoorsk, EmptyKrugmann, EmptyBrohm,
         EmptyAAG, EmptySperex, EmptyNovae, EmptyTraeg, EmptyChemlek, EmptyNeoGamma,
     };
-    // cargos that can be put into containers, but aren't in vanilla
+
+    /// <summary>cargos that can be put into containers, but aren't in vanilla</summary>
     private static List<CargoType> _ContainerizableCargos = new List<CargoType>();
     public static List<CargoType> ContainerizableCargos
     {
@@ -122,7 +125,7 @@ static class Cars
     };
     public static List<TrainCarType> flatcars = new()
     {
-        FlatbedEmpty
+        FlatbedEmpty, FlatbedStakes
     };
 }
 
