@@ -21,8 +21,7 @@ class JobsGenerator_CreateShuntingLoadJob_Patch
             if (carsLoadData[index].cars.Any<Car>((Func<Car, bool>)(car => !cargoV2.IsLoadableOnCarType(car.carType.parentType))))
             {
                 var s = $"[{Main.mod?.Info.Id}] Error while creating {JobType.ShuntingLoad} job, not all cars from {nameof(carsLoadData)}[{index}] ({carsLoadData[index].cars.Select(c => $"{c.carType.parentType.id}:{c.carType.id}").Join()}) can carry {carsLoadData[index].cargoType}!";
-                Debug.LogError(s);
-                Main.DebugLog(() => s);
+                Main.ErrorLog(() => s);
                 break;
             }
         }
@@ -42,8 +41,7 @@ class JobsGenerator_CreateShuntingUnloadJob_Patch
             if (carsUnloadData[index].cars.Any<Car>((Func<Car, bool>)(car => !cargoV2.IsLoadableOnCarType(car.carType.parentType))))
             {
                 var s = $"[{Main.mod?.Info.Id}] Error while creating {JobType.ShuntingUnload} job, not all cars from {nameof(carsUnloadData)}[{index}] ({carsUnloadData[index].cars.Select(c => $"{c.carType.parentType.id}:{c.carType.id}").Join()}) can carry {carsUnloadData[index].cargoType}!";
-                Debug.LogError(s);
-                Main.DebugLog(() => s);
+                Main.ErrorLog(() => s);
                 break;
             }
         }
@@ -72,8 +70,7 @@ class JobsGenerator_CreateTransportJob_Patch
                 if (!transportedCargoPerCar![index].ToV2().IsLoadableOnCarType(cars[index].carType.parentType))
                 {
                     var s = $"[{Main.mod?.Info.Id}] Error while creating transport job, {nameof(cars)}[{index}] ({cars[index].carType.parentType.id}:{cars[index].carType.id}) can't carry specified {nameof(transportedCargoPerCar)}[{index}] ({transportedCargoPerCar[index]})!";
-                    Debug.LogError(s);
-                    Main.DebugLog(() => s);
+                    Main.ErrorLog(() => s);
                     break;
                 }
             }
