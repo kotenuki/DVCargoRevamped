@@ -28,7 +28,7 @@ class DVObjectModel_RecalculateCaches_Patch
     {
         Main.DebugLog(() => "Recalculating caches");
         // link liveries to traincartypes
-        __instance.carTypes = UpdateTrainCars(ref __instance);
+        // __instance.carTypes = UpdateTrainCars(ref __instance);
         // link traincartypes to cargos
         __instance.cargos = UpdateCargos(ref __instance);
 
@@ -49,7 +49,7 @@ class DVObjectModel_RecalculateCaches_Patch
             foreach (var cargo in cargos)
             {
                 Main.DebugLog(LoggingLevel.Debug, () => $"{cargo.id} carTypes: [{cargo.loadableCarTypes.Select(info => info.carType.id).Join()}]");
-                Main.DebugLog(LoggingLevel.Debug, () => $"{cargo.id} liveries: [{cargo.loadableCarTypes.SelectMany(info => info.carType.liveries).Select(l => l.id).Distinct().Join()}]");
+                Main.DebugLog(LoggingLevel.Debug, () => $"{cargo.id} liveries: [{cargo.loadableCarTypes.SelectMany(info => info.carType.liveries).Select(l => $"{l.id} ({l.parentType.id})").Distinct().Join()}]");
                 Main.DebugLog(LoggingLevel.Debug, () => $"{cargo.id} prefabs:  [{carTypes.SelectMany(ct => { var gos = cargo.GetCargoPrefabsForCarType(ct); return gos == null ? new List<GameObject>() : gos.ToList(); }).Select(go => go.name).Join()}]");
             }
         }
@@ -111,9 +111,8 @@ class DVObjectModel_RecalculateCaches_Patch
                     tankerPrefab = cargo.GetCargoPrefabsForCarType(TCT.TankChem);
                 }
                 var tankerInfo = tankerTypes.Select(t => new CargoType_v2.LoadableInfo(t, tankerPrefab));
-                var loadables = cargo.loadableCarTypes.ToList();
+                var loadables = cargo.loadableCarTypes.Distinct().ToList();
                 loadables.AddRange(tankerInfo);
-
                 cargo.loadableCarTypes = loadables.Distinct().ToArray();
             }
 
@@ -153,6 +152,7 @@ class DVObjectModel_RecalculateCaches_Patch
                 loadables.AddRange(flatcarInfo);
                 cargo.loadableCarTypes = loadables.Distinct().ToArray();
             }
+            cargo.loadableCarTypes = cargo.loadableCarTypes.Distinct().ToArray();
             cargos.Add(cargo);
         }
 
