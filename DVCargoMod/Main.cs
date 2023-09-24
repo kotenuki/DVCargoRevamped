@@ -71,6 +71,14 @@ public static class Main
 [HarmonyPriority(Priority.First)]
 class DVObjectModel_RecalculateCaches_Patch
 {
+	static bool Prefix(
+		ref DVObjectModel __instance
+	)
+	{
+
+		return Main.KEEP_ORIGINAL;
+	}
+
 	static void Postfix(
 		ref DVObjectModel __instance,
 		ref Dictionary<TrainCarType_v2, List<CargoType_v2>> ____carTypeToLoadableCargo,
@@ -79,24 +87,24 @@ class DVObjectModel_RecalculateCaches_Patch
 	{
 		Main.DebugLog(() => "Recalculating caches");
 		// link liveries to traincartypes
-		UpdateTrainCars(ref __instance);
-
+		__instance.carTypes = UpdateTrainCars(ref __instance);
 		// link traincartypes to cargos
-		UpdateCargos(ref __instance);
+		__instance.cargos = UpdateCargos(ref __instance);
 
 		// recalculate dicts
-		Main.DebugLog(() => "Reloading mappings");
 		var cargos = __instance.cargos;
 		var carTypes = __instance.carTypes;
 
+		Main.DebugLog(() => "Reloading mappings");
 		Main.DebugLog(LoggingLevel.Verbose, () => "Reloading _carTypeToLoadableCargo");
 		____carTypeToLoadableCargo = __instance.carTypes.ToDictionary(c => c, c => cargos.Where(cg => cg.loadableCarTypes.Any(lct => lct.carType == c)).ToList());
 		Main.DebugLog(LoggingLevel.Verbose, () => "Reloading _cargoToLoadableCarTypes");
 		____cargoToLoadableCarTypes = cargos.ToDictionary(c => c, c => c.loadableCarTypes.Select(lct => lct.carType).ToList());
 		Main.DebugLog(() => "Finished reloading mappings");
 
-		if (Main.settings.loggingLevel > LoggingLevel.None)
+		if (Main.settings.loggingLevel != LoggingLevel.None)
 		{
+			Main.DebugLog(LoggingLevel.Debug, () => "\nAFTER DICT RELOAD");
 			foreach (var cargo in cargos)
 			{
 				Main.DebugLog(LoggingLevel.Debug, () => $"{cargo.id} carTypes: [{cargo.loadableCarTypes.Select(info => info.carType.id).Join()}]");
@@ -107,7 +115,7 @@ class DVObjectModel_RecalculateCaches_Patch
 		Main.DebugLog(() => "Caches recalculated");
 	}
 
-	private static void UpdateTrainCars(ref DVObjectModel instance)
+	private static List<TrainCarType_v2> UpdateTrainCars(ref DVObjectModel instance)
 	{
 		Main.DebugLog(() => "Adding TrainCarLiveries to TrainCarTypes");
 		var carTypes = new List<TrainCarType_v2>();
@@ -130,11 +138,11 @@ class DVObjectModel_RecalculateCaches_Patch
 			carType.liveries = carType.liveries.Distinct().ToList();
 			carTypes.Add(carType);
 		}
-		instance.carTypes = carTypes;
 		Main.DebugLog(() => "Completed adding TrainCarLiveryies to TrainCarTypes");
+		return carTypes;
 	}
 
-	private static void UpdateCargos(ref DVObjectModel instance)
+	private static List<CargoType_v2> UpdateCargos(ref DVObjectModel instance)
 	{
 		Main.DebugLog(() => "Adding LoadableInfos to CargoType_v2s");
 		var cargos = new List<CargoType_v2>();
@@ -183,7 +191,7 @@ class DVObjectModel_RecalculateCaches_Patch
 			}
 
 			// add some containerizable cargoes to flat cars in containers
-			if (Cargos.containerizableCargos.Contains(cargo.v1))
+			if (Cargos.ContainerizableCargos.Contains(cargo.v1))
 			{
 				Main.DebugLog(LoggingLevel.Verbose, () => $"Adding flatcars to containerizable cargo {cargo.v1}");
 				var flatcarLiveries = Cars.flatcars;
@@ -197,6 +205,8 @@ class DVObjectModel_RecalculateCaches_Patch
 				{
 					flatcarPrefab = LoadableInfos.Containers.Hazmat.Explosive;
 				}
+				Main.DebugLog(LoggingLevel.Debug, () => $"prefabs for {cargo.v1}: [{flatcarPrefab.Select(pf => pf.name).Join()}]");
+
 				var flatcarInfo = flatcarTypes.Select(t => new CargoType_v2.LoadableInfo(t, flatcarPrefab));
 				var loadables = cargo.loadableCarTypes.ToList();
 				loadables.AddRange(flatcarInfo);
@@ -204,8 +214,9 @@ class DVObjectModel_RecalculateCaches_Patch
 			}
 			cargos.Add(cargo);
 		}
-		instance.cargos = cargos;
+
 		Main.DebugLog(() => "Completed LoadableInfos to CargoType_v2s");
+		return cargos;
 	}
 }
 #endregion

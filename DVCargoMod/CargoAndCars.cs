@@ -41,18 +41,18 @@ static class Cargos
         EmptyAAG, EmptySperex, EmptyNovae, EmptyTraeg, EmptyChemlek, EmptyNeoGamma,
     };
     // cargos that can be put into containers, but aren't in vanilla
-    private static List<CargoType> _containerizableCargos = new List<CargoType>();
-    public static List<CargoType> containerizableCargos
+    private static List<CargoType> _ContainerizableCargos = new List<CargoType>();
+    public static List<CargoType> ContainerizableCargos
     {
         get
         {
-            if (_containerizableCargos.Count() == 0)
+            if (_ContainerizableCargos.Count() == 0)
             {
-                _containerizableCargos.AddRange(containerizableCargosAnyContainer);
-                _containerizableCargos.AddRange(containerizableCargosIsoOxydizing);
-                _containerizableCargos.AddRange(containerizableCargosIsoExplosive);
+                _ContainerizableCargos.AddRange(containerizableCargosAnyContainer);
+                _ContainerizableCargos.AddRange(containerizableCargosIsoOxydizing);
+                _ContainerizableCargos.AddRange(containerizableCargosIsoExplosive);
             }
-            return _containerizableCargos;
+            return _ContainerizableCargos;
         }
     }
 
@@ -88,30 +88,30 @@ static class Cargos
 
 static class Cars
 {
-    public static List<TrainCarType_v2> fluidCars = new List<TrainCarType>
+    public static List<TrainCarType> fluidCars = new()
     {
 		// FlatbedEmpty,
 		TankWhite, // TankYellow, TankChrome, // TankOil
 		TankBlue, // TankOrange,  // TankGas
 		TankBlack, // TankChem
-	}.ConvertAll(c => c.ToV2().parentType).ToList();
-    public static List<TrainCarType_v2> nonPerishableCars = new List<TrainCarType>
+	};
+    public static List<TrainCarType> nonPerishableCars = new()
     {
         FlatbedEmpty,
         BoxcarBrown, BoxcarGreen, BoxcarPink, BoxcarRed,
         GondolaGray, GondolaGreen, GondolaRed,
-    }.ConvertAll(c => c.ToV2().parentType).ToList();
-    public static List<TrainCarType_v2> perishableCars = new List<TrainCarType>
+    };
+    public static List<TrainCarType> perishableCars = new()
     {
         FlatbedEmpty,
         BoxcarBrown, BoxcarGreen, BoxcarPink, BoxcarRed,
         RefrigeratorWhite,
-    }.ConvertAll(c => c.ToV2().parentType).ToList();
-    public static List<TrainCarType_v2> bulkCars = new List<TrainCarType>
+    };
+    public static List<TrainCarType> bulkCars = new()
     {
         HopperBrown, HopperTeal, HopperYellow,
         GondolaGray, GondolaGreen, GondolaRed,
-    }.ConvertAll(c => c.ToV2().parentType).ToList();
+    };
     public static List<TrainCarType> tankers = new()
     {
         TankWhite, TankYellow, TankChrome,

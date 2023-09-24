@@ -1,7 +1,7 @@
 [
     {
         "cargo": "Coal",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Hopper",
                 "prefabs": [
@@ -12,7 +12,7 @@
     },
     {
         "cargo": "IronOre",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Hopper",
                 "prefabs": [
@@ -23,7 +23,7 @@
     },
     {
         "cargo": "CrudeOil",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "TankOil",
                 "prefabs": [
@@ -34,7 +34,7 @@
     },
     {
         "cargo": "Diesel",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "TankOil",
                 "prefabs": [
@@ -45,7 +45,7 @@
     },
     {
         "cargo": "Gasoline",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "TankOil",
                 "prefabs": [
@@ -56,7 +56,7 @@
     },
     {
         "cargo": "Methane",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "TankGas",
                 "prefabs": [
@@ -67,7 +67,7 @@
     },
     {
         "cargo": "Logs",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "FlatbedStakes",
                 "prefabs": [
@@ -78,7 +78,7 @@
     },
     {
         "cargo": "Boards",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -89,7 +89,7 @@
     },
     {
         "cargo": "Plywood",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -100,7 +100,7 @@
     },
     {
         "cargo": "Wheat",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Hopper",
                 "prefabs": [
@@ -111,7 +111,7 @@
     },
     {
         "cargo": "Corn",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Hopper",
                 "prefabs": [
@@ -122,7 +122,7 @@
     },
     {
         "cargo": "Pigs",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Boxcar",
                 "prefabs": []
@@ -131,7 +131,7 @@
     },
     {
         "cargo": "Cows",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Boxcar",
                 "prefabs": []
@@ -140,7 +140,7 @@
     },
     {
         "cargo": "Chickens",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Boxcar",
                 "prefabs": []
@@ -149,7 +149,7 @@
     },
     {
         "cargo": "Sheep",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Boxcar",
                 "prefabs": []
@@ -158,7 +158,7 @@
     },
     {
         "cargo": "Goats",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Boxcar",
                 "prefabs": []
@@ -167,7 +167,7 @@
     },
     {
         "cargo": "Bread",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Boxcar",
                 "prefabs": []
@@ -176,7 +176,7 @@
     },
     {
         "cargo": "DairyProducts",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Refrigerator",
                 "prefabs": []
@@ -192,7 +192,7 @@
     },
     {
         "cargo": "MeatProducts",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Refrigerator",
                 "prefabs": []
@@ -208,7 +208,7 @@
     },
     {
         "cargo": "CannedFood",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -220,7 +220,7 @@
     },
     {
         "cargo": "CatFood",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -236,7 +236,7 @@
     },
     {
         "cargo": "SteelRolls",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -247,7 +247,7 @@
     },
     {
         "cargo": "SteelBillets",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -258,7 +258,7 @@
     },
     {
         "cargo": "SteelSlabs",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -269,7 +269,7 @@
     },
     {
         "cargo": "SteelBentPlates",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -280,7 +280,7 @@
     },
     {
         "cargo": "SteelRails",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -291,7 +291,7 @@
     },
     {
         "cargo": "ScrapMetal",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Gondola",
                 "prefabs": [
@@ -302,7 +302,7 @@
     },
     {
         "cargo": "ElectronicsIskar",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -313,7 +313,7 @@
     },
     {
         "cargo": "ElectronicsKrugmann",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -324,7 +324,7 @@
     },
     {
         "cargo": "ElectronicsAAG",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -336,7 +336,7 @@
     },
     {
         "cargo": "ElectronicsNovae",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -348,7 +348,7 @@
     },
     {
         "cargo": "ElectronicsTraeg",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -360,7 +360,7 @@
     },
     {
         "cargo": "ToolsIskar",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Boxcar",
                 "prefabs": []
@@ -375,7 +375,7 @@
     },
     {
         "cargo": "ToolsBrohm",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -387,7 +387,7 @@
     },
     {
         "cargo": "ToolsAAG",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -399,7 +399,7 @@
     },
     {
         "cargo": "ToolsNovae",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -411,7 +411,7 @@
     },
     {
         "cargo": "ToolsTraeg",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -423,7 +423,7 @@
     },
     {
         "cargo": "Furniture",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Boxcar",
                 "prefabs": []
@@ -438,7 +438,7 @@
     },
     {
         "cargo": "Pipes",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "FlatbedStakes",
                 "prefabs": [
@@ -453,7 +453,7 @@
     },
     {
         "cargo": "ClothingObco",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -464,7 +464,7 @@
     },
     {
         "cargo": "ClothingNeoGamma",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -475,7 +475,7 @@
     },
     {
         "cargo": "ClothingNovae",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -487,7 +487,7 @@
     },
     {
         "cargo": "ClothingTraeg",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -499,7 +499,7 @@
     },
     {
         "cargo": "Medicine",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Refrigerator",
                 "prefabs": []
@@ -515,7 +515,7 @@
     },
     {
         "cargo": "ChemicalsIskar",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -530,7 +530,7 @@
     },
     {
         "cargo": "ChemicalsSperex",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -545,7 +545,7 @@
     },
     {
         "cargo": "NewCars",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Autorack",
                 "prefabs": [
@@ -559,7 +559,7 @@
     },
     {
         "cargo": "ImportedNewCars",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Autorack",
                 "prefabs": [
@@ -573,7 +573,7 @@
     },
     {
         "cargo": "Tractors",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -584,7 +584,7 @@
     },
     {
         "cargo": "Excavators",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -595,7 +595,7 @@
     },
     {
         "cargo": "Alcohol",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "TankGas",
                 "prefabs": [
@@ -606,7 +606,7 @@
     },
     {
         "cargo": "Acetylene",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -617,7 +617,7 @@
     },
     {
         "cargo": "CryoOxygen",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -628,7 +628,7 @@
     },
     {
         "cargo": "CryoHydrogen",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -639,7 +639,7 @@
     },
     {
         "cargo": "Argon",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -650,7 +650,7 @@
     },
     {
         "cargo": "Nitrogen",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -661,7 +661,7 @@
     },
     {
         "cargo": "Ammonia",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "TankChem",
                 "prefabs": [
@@ -672,7 +672,7 @@
     },
     {
         "cargo": "SodiumHydroxide",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "TankChem",
                 "prefabs": [
@@ -683,7 +683,7 @@
     },
     {
         "cargo": "SpentNuclearFuel",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "NuclearFlask",
                 "prefabs": [
@@ -694,7 +694,7 @@
     },
     {
         "cargo": "Ammunition",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "BoxcarMilitary",
                 "prefabs": [
@@ -705,7 +705,7 @@
     },
     {
         "cargo": "Biohazard",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "FlatbedMilitary",
                 "prefabs": [
@@ -716,7 +716,7 @@
     },
     {
         "cargo": "Tanks",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "FlatbedMilitary",
                 "prefabs": [
@@ -727,7 +727,7 @@
     },
     {
         "cargo": "MilitaryTrucks",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "FlatbedMilitary",
                 "prefabs": [
@@ -738,7 +738,7 @@
     },
     {
         "cargo": "MilitarySupplies",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "FlatbedMilitary",
                 "prefabs": [
@@ -754,7 +754,7 @@
     },
     {
         "cargo": "EmptySunOmni",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -768,7 +768,7 @@
     },
     {
         "cargo": "EmptyIskar",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -779,7 +779,7 @@
     },
     {
         "cargo": "EmptyObco",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -790,7 +790,7 @@
     },
     {
         "cargo": "EmptyGoorsk",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -801,7 +801,7 @@
     },
     {
         "cargo": "EmptyKrugmann",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -812,7 +812,7 @@
     },
     {
         "cargo": "EmptyBrohm",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -824,7 +824,7 @@
     },
     {
         "cargo": "EmptyAAG",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -836,7 +836,7 @@
     },
     {
         "cargo": "EmptySperex",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -847,7 +847,7 @@
     },
     {
         "cargo": "EmptyNovae",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -859,7 +859,7 @@
     },
     {
         "cargo": "EmptyTraeg",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -871,7 +871,7 @@
     },
     {
         "cargo": "EmptyChemlek",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
@@ -882,7 +882,7 @@
     },
     {
         "cargo": "EmptyNeoGamma",
-        "carTypes": [
+        "loadableCarTypes": [
             {
                 "carType": "Flatbed",
                 "prefabs": [
