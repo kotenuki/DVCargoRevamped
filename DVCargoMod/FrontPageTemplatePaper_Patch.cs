@@ -119,8 +119,14 @@ class FrontPageTemplatePaper_Patch
 						{
 							return Main.KEEP_ORIGINAL;
 						}
-						string currentCargoModel = trainCar.CargoModelController.currentCargoModel.name.Remove(0, 19).Replace("(Clone)", "").Replace("White", "AAG").Replace("Old", "").Replace("AC", "").Replace("Red", "Traeg");
-						icon2 = CargoSprites.getContainerSprite(currentCargoModel);
+						var currentCargoModelName = trainCar.CargoModelController.currentCargoModel.name;
+						if (currentCargoModelName.Contains("Crane")) return Main.KEEP_ORIGINAL;
+						if (currentCargoModelName.Contains("Pipes")) return Main.KEEP_ORIGINAL;
+						if (currentCargoModelName.Contains("Steel")) return Main.KEEP_ORIGINAL;
+						//Main.DebugLog(() => $"Name before trim: {currentCargoModelName}");
+						string searchName = currentCargoModelName.Remove(0, 19).Replace("(Clone)", "").Replace("White", "AAG").Replace("Old", "").Replace("AC", "").Replace("Red", "Traeg");
+						//Main.DebugLog(() => $"Name after trim: {searchName}");
+						icon2 = CargoSprites.getContainerSprite(searchName);
 					}
 					else
 					{
