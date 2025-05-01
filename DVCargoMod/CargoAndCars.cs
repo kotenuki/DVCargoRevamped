@@ -18,16 +18,19 @@ static class Cargos
         Ammonia, SodiumHydroxide,
         Argon, Nitrogen, CryoHydrogen, CryoOxygen,
         ChemicalsIskar, ChemicalsSperex,
+		Milk,
     };
     public static List<CargoType> boxcarCargoes = new()
     {
-        Boards, Plywood,
-        SteelBentPlates, SteelBillets, SteelRails, SteelRolls, SteelSlabs,
+        Boards, Plywood, Sleepers, Furniture,
+        SteelBentPlates, SteelBillets, SteelRails, SteelRolls, SteelSlabs, Pipes,
+		CraneParts,
         Bread, CatFood, CannedFood, DairyProducts, MeatProducts, Medicine,
-        Wheat, Corn,
+        Wheat, Corn, Flour, SunflowerSeeds, TemperateFruits, Fish, TropicalFruits,
+		Vegetables, Milk, Cotton, Wool, Eggs
     };
 
-    /// <summary>all cargoes in vanilla that are alreadyt in containers</summary>
+    /// <summary>all cargoes in vanilla that are already in containers</summary>
     public static List<CargoType> containerizedCargos = new()
     {
         ElectronicsAAG, ElectronicsIskar, ElectronicsKrugmann, ElectronicsNovae, ElectronicsTraeg,
@@ -35,9 +38,11 @@ static class Cargos
         ToolsIskar, ToolsBrohm, ToolsAAG, ToolsNovae, ToolsTraeg,
         ChemicalsIskar, ChemicalsSperex,
         Argon, Nitrogen, CryoHydrogen, CryoOxygen,
-        Bread, CatFood, CannedFood, DairyProducts, MeatProducts, Medicine,
+		Furniture,
+        CatFood, CannedFood, DairyProducts, MeatProducts, Medicine, TropicalFruits,
         EmptySunOmni, EmptyIskar, EmptyObco, EmptyGoorsk, EmptyKrugmann, EmptyBrohm,
         EmptyAAG, EmptySperex, EmptyNovae, EmptyTraeg, EmptyChemlek, EmptyNeoGamma,
+		ScrapContainers,
     };
 
     /// <summary>cargos that can be put into containers, but aren't in vanilla</summary>
@@ -59,9 +64,9 @@ static class Cargos
     public static List<CargoType> containerizableCargosAnyContainer = new()
     {
         Wheat, Corn, // yes it's a thing: https://pittoship.com/containers/grain-shipping-containers/
-        Bread,
-        ScrapMetal,
-        Pipes,
+        Bread, Fish, TemperateFruits, Vegetables, Milk, Eggs, Cotton, Wool, Flour,
+        ScrapMetal, ScrapWood,
+        Pipes, CraneParts,
         NewCars, ImportedNewCars,
     };
     public static List<CargoType> containerizableCargosIsoOxydizing = new()
@@ -74,15 +79,15 @@ static class Cargos
     };
     public static List<CargoType> perishableCargos = new()
     {
-        Bread, CatFood, CannedFood, DairyProducts, MeatProducts,
+        Bread, CatFood, CannedFood, DairyProducts, MeatProducts, TemperateFruits, TropicalFruits, Milk, Eggs, Fish,
         Medicine,
-        Chickens, Cows, Goats, Pigs, Sheep,
+		Poultry, Cows, Goats, Pigs, Sheep,
     };
     public static List<CargoType> bulkCargos = new()
     {
         CargoType.Coal, IronOre,
         Logs,
-        ScrapMetal
+        ScrapMetal, WoodChips, ScrapWood,
     };
 }
 
@@ -111,6 +116,7 @@ static class Cars
     {
         HopperBrown, HopperTeal, HopperYellow,
         GondolaGray, GondolaGreen, GondolaRed,
+		HopperCoveredBrown
     };
     public static List<TrainCarType> tankers = new()
     {
@@ -118,6 +124,10 @@ static class Cars
         TankBlue, TankOrange,
         TankBlack,
     };
+	public static List<TrainCarType> foodTankers = new()
+	{
+		TankShortMilk,
+	};
     public static List<TrainCarType> boxcars = new()
     {
         BoxcarBrown, BoxcarGreen, BoxcarPink, BoxcarRed,
@@ -131,6 +141,7 @@ static class Cars
 
 class TCT
 {
+	public static TrainCarType_v2 TankMilk { get; } = DV.Globals.G.Types.carTypes.Where(tct => tct.id == "TankShortFood").First();
     public static TrainCarType_v2 TankChem { get; } = DV.Globals.G.Types.carTypes.Where(tct => tct.id == "TankChem").First();
     public static TrainCarType_v2 TankGas { get; } = DV.Globals.G.Types.carTypes.Where(tct => tct.id == "TankGas").First();
     public static TrainCarType_v2 TankOil { get; } = DV.Globals.G.Types.carTypes.Where(tct => tct.id == "TankOil").First();
@@ -139,6 +150,7 @@ class TCT
     public static TrainCarType_v2 FlatbedStakes { get; } = DV.Globals.G.Types.carTypes.Where(tct => tct.id == "FlatbedStakes").First();
     public static TrainCarType_v2 Gondola { get; } = DV.Globals.G.Types.carTypes.Where(tct => tct.id == "Gondola").First();
     public static TrainCarType_v2 Hopper { get; } = DV.Globals.G.Types.carTypes.Where(tct => tct.id == "Hopper").First();
+	public static TrainCarType_v2 HopperCovered { get; } = DV.Globals.G.Types.carTypes.Where(tct => tct.id == "HopperCovered").First();
     public static TrainCarType_v2 Refrigerator { get; } = DV.Globals.G.Types.carTypes.Where(tct => tct.id == "Refrigerator").First();
 }
 
