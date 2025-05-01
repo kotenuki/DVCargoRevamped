@@ -5,9 +5,11 @@ Caboose
 Flatbed
 FlatbedMilitary
 FlatbedStakes
+FlatbedShort
 Gondola
 HandCar
 Hopper
+HopperCovered
 LocoDE2
 LocoDE6
 LocoDE6Slug
@@ -16,9 +18,13 @@ LocoDM3
 LocoS282A
 LocoS282B
 LocoS060
+LocoDM1U
+LocoMicroshunter
 NuclearFlask
 Passenger
+Stock
 Refrigerator
 TankChem
 TankGas
 TankOil
+TankShortFood
