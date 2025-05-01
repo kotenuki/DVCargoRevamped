@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<AssemblyName>DvCargoMod</AssemblyName>
 		<TargetFramework>net48</TargetFramework>
@@ -12,6 +12,7 @@
 		<Reference Include="Assembly-CSharp" />
 		<Reference Include="DV.ThingTypes" />
 		<Reference Include="DV.Utils" />
+		<Reference Include="DV.Localization" />
 		<Reference Include="WorldStreamer" />
 	</ItemGroup>
 
@@ -20,6 +21,8 @@
 		<Reference Include="UnityEngine" />
 		<Reference Include="UnityEngine.CoreModule" />
 		<Reference Include="UnityEngine.PhysicsModule" />
+		<Reference Include="UnityEngine.UI" />
+		<Reference Include="Unity.TextMeshPro" />
 	</ItemGroup>
 
 	<!-- Mod Loader -->

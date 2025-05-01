@@ -82,7 +82,7 @@ static class Cargos
         Bread, CatFood, CannedFood, DairyProducts, MeatProducts, TemperateFruits, TropicalFruits, Milk, Eggs, Fish,
         Medicine,
 		Poultry, Cows, Goats, Pigs, Sheep,
-    };
+	};
     public static List<CargoType> bulkCargos = new()
     {
         CargoType.Coal, IronOre,
@@ -152,6 +152,26 @@ class TCT
     public static TrainCarType_v2 Hopper { get; } = DV.Globals.G.Types.carTypes.Where(tct => tct.id == "Hopper").First();
 	public static TrainCarType_v2 HopperCovered { get; } = DV.Globals.G.Types.carTypes.Where(tct => tct.id == "HopperCovered").First();
     public static TrainCarType_v2 Refrigerator { get; } = DV.Globals.G.Types.carTypes.Where(tct => tct.id == "Refrigerator").First();
+}
+
+class CargoSprites
+{
+	public static Sprite getContainerSprite(string name)
+	{
+		return DV.Globals.G.Types.cargos.Where(c => c.id.Contains(name)).First().icon;
+	}
+	public static Sprite SunOmni { get; } = DV.Globals.G.Types.cargos.Where(c => c.id == "EmptySunOmni").First().icon;
+	public static Sprite Iskar { get; } = DV.Globals.G.Types.cargos.Where(c => c.id == "EmptyIskar").First().icon;
+	public static Sprite Obco { get; } = DV.Globals.G.Types.cargos.Where(c => c.id == "EmptyObco").First().icon;
+	public static Sprite Goorsk { get; } = DV.Globals.G.Types.cargos.Where(c => c.id == "EmptyGoorsk").First().icon;
+	public static Sprite Krugmann { get; } = DV.Globals.G.Types.cargos.Where(c => c.id == "EmptyKrugmann").First().icon;
+	public static Sprite Brohm { get; } = DV.Globals.G.Types.cargos.Where(c => c.id == "EmptyBrohm").First().icon;
+	public static Sprite AAG { get; } = DV.Globals.G.Types.cargos.Where(c => c.id == "EmptyAAG").First().icon;
+	public static Sprite Sperex { get; } = DV.Globals.G.Types.cargos.Where(c => c.id == "EmptySperex").First().icon;
+	public static Sprite Novae { get; } = DV.Globals.G.Types.cargos.Where(c => c.id == "EmptyNovae").First().icon;
+	public static Sprite Traeg { get; } = DV.Globals.G.Types.cargos.Where(c => c.id == "EmptyTraeg").First().icon;
+	public static Sprite Chemlek { get; } = DV.Globals.G.Types.cargos.Where(c => c.id == "EmptyChemlek").First().icon;
+	public static Sprite NeoGamma { get; } = DV.Globals.G.Types.cargos.Where(c => c.id == "EmptyNeoGamma").First().icon;
 }
 
 static class LoadableInfos
