@@ -12,6 +12,7 @@
 		<Reference Include="Assembly-CSharp" />
 		<Reference Include="DV.ThingTypes" />
 		<Reference Include="DV.Utils" />
+		<Reference Include="WorldStreamer" />
 	</ItemGroup>
 
 	<!-- Unity -->

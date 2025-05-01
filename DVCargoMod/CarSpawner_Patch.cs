@@ -19,7 +19,7 @@ static class CarSpawner_InitPoolCoro_Patch
         yield return null;
         if ((bool)SingletonBehaviour<WorldMover>.Instance)
         {
-            while (SingletonBehaviour<WorldMover>.Instance.originShiftParent == null)
+            while (WorldMover.OriginShiftParent == null)
             {
                 yield return null;
             }
