@@ -126,7 +126,7 @@ class FrontPageTemplatePaper_Patch
 						//Main.DebugLog(() => $"Name before trim: {currentCargoModelName}");
 						string searchName = currentCargoModelName.Remove(0, 19).Replace("(Clone)", "").Replace("White", "AAG").Replace("Old", "").Replace("AC", "").Replace("Red", "Traeg");
 						//Main.DebugLog(() => $"Name after trim: {searchName}");
-						icon2 = CargoSprites.getContainerSprite(searchName);
+						icon2 = CargoSprites.getContainerSprite(searchName) ?? cargoType_v.icon;
 					}
 					else
 					{
