@@ -156,9 +156,9 @@ class TCT
 
 class CargoSprites
 {
-	public static Sprite getContainerSprite(string name)
+	public static Sprite? getContainerSprite(string name)
 	{
-		return DV.Globals.G.Types.cargos.Where(c => c.id.Contains(name)).First().icon;
+		return DV.Globals.G.Types.cargos.FirstOrDefault(c => c.id.Contains(name))?.icon;
 	}
 	public static Sprite SunOmni { get; } = DV.Globals.G.Types.cargos.Where(c => c.id == "EmptySunOmni").First().icon;
 	public static Sprite Iskar { get; } = DV.Globals.G.Types.cargos.Where(c => c.id == "EmptyIskar").First().icon;

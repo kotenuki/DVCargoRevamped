@@ -104,8 +104,8 @@ class TaskTemplatePaper_Patch
 						if (currentCargoModelName.Contains("Crane")) return Main.KEEP_ORIGINAL;
 						if (currentCargoModelName.Contains("Pipes")) return Main.KEEP_ORIGINAL;
 						if (currentCargoModelName.Contains("Steel")) return Main.KEEP_ORIGINAL;
-						string currentCargoModel = currentCargoModelName.Remove(0, 19).Replace("(Clone)", "").Replace("White", "AAG").Replace("Old", "").Replace("AC", "").Replace("Red", "Traeg");
-						icon2 = CargoSprites.getContainerSprite(currentCargoModelName);
+						string searchName = currentCargoModelName.Remove(0, 19).Replace("(Clone)", "").Replace("White", "AAG").Replace("Old", "").Replace("AC", "").Replace("Red", "Traeg");
+						icon2 = CargoSprites.getContainerSprite(searchName) ?? cargoType_v.icon;
 					}
 					else
 					{
